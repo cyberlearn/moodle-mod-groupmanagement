@@ -16,9 +16,18 @@
         <FIELD NAME="showresults" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="multipleenrollmentspossible" NEXT="display"/>
         <FIELD NAME="display" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="showresults" NEXT="allowupdate"/>
         <FIELD NAME="allowupdate" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="display" NEXT="showunanswered"/>
-        <FIELD NAME="showunanswered" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="allowupdate" NEXT="limitanswers"/>
-        <FIELD NAME="limitanswers" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="showunanswered" NEXT="timeopen"/>
-        <FIELD NAME="timeopen" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="limitanswers" NEXT="timeclose"/>
+        <FIELD NAME="showunanswered" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="allowupdate" NEXT="limitmaxusersingroups"/>
+        <FIELD NAME="limitmaxusersingroups" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="showunanswered" NEXT="maxusersingroups"/>
+        <FIELD NAME="maxusersingroups" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="limitmaxusersingroups" NEXT="freezegroups"/>
+        <FIELD NAME="freezegroups" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="maxusersingroups" NEXT="freezegroupsaftertime"/>
+        <FIELD NAME="freezegroupsaftertime" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="NULL" SEQUENCE="false" PREVIOUS="freezegroups" NEXT="displaygrouppicture"/>
+        <FIELD NAME="displaygrouppicture" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" PREVIOUS="freezegroupsaftertime" NEXT="displaygroupvideo" />
+        <FIELD NAME="displaygroupvideo" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" PREVIOUS="displaygrouppicture" NEXT="groupcreationpossible"/>
+        <FIELD NAME="groupcreationpossible" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" PREVIOUS="displaygroupvideo" NEXT="privategroupspossible"/>
+        <FIELD NAME="privategroupspossible" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="groupcreationpossible" NEXT="limitmaxgroups"/>
+        <FIELD NAME="limitmaxgroups" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="privategroupspossible" NEXT="maxgroups"/>
+        <FIELD NAME="maxgroups" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="limitmaxgroups" NEXT="timeopen"/>
+        <FIELD NAME="timeopen" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="" NEXT="timeclose"/>
         <FIELD NAME="timeclose" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timeopen" NEXT="timemodified"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timeclose" NEXT="completionsubmit"/>
         <FIELD NAME="completionsubmit" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" COMMENT="If this field is set to 1, then the activity will be automatically marked as 'complete' once the user submits their groupmanagement." PREVIOUS="timemodified"/>
@@ -35,8 +44,11 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="groupmanagementid"/>
         <FIELD NAME="groupmanagementid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="groupid"/>
         <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="groupmanagementid" NEXT="maxanswers"/>
-        <FIELD NAME="maxanswers" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="groupid" NEXT="timemodified"/>
-        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="maxanswers"/>
+        <FIELD NAME="maxanswers" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="groupid" NEXT="groupvideo"/>
+        <FIELD NAME="groupvideo" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="maxanswers" NEXT="creatorid"/>
+        <FIELD NAME="creatorid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="groupvideo" NEXT="enrollementkey"/>
+        <FIELD NAME="enrollementkey" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="creatorid" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="enrollementkey"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="groupmanagementid"/>
