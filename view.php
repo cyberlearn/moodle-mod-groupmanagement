@@ -29,9 +29,10 @@ require_once("lib.php");
 require_once($CFG->dirroot.'/group/lib.php');
 require_once($CFG->libdir . '/completionlib.php');
 
-$id         = required_param('id', PARAM_INT);                 // Course Module ID
-$action     = optional_param('action', '', PARAM_ALPHA);
-$userids    = optional_param_array('userid', array(), PARAM_INT); // array of attempt ids for delete action
+$id              = required_param('id', PARAM_INT);                 // Course Module ID
+$action          = optional_param('action', '', PARAM_ALPHA);
+$userids         = optional_param_array('userid', array(), PARAM_INT); // array of attempt ids for delete action
+$error           = optional_param('error', '', PARAM_INT);
 
 $url = new moodle_url('/mod/groupmanagement/view.php', array('id'=>$id));
 if ($action !== '') {
@@ -144,7 +145,7 @@ if (data_submitted() && is_enrolled($context, NULL, 'mod/groupmanagement:choose'
 
             if (!empty($selected_option->enrollementkey)) {
                 if ($enrollementkey != $selected_option->enrollementkey) {
-                    redirect("view.php?id=$cm->id");
+                    redirect("view.php?id=$cm->id&error=1");
                 }
             }
 
@@ -204,6 +205,10 @@ if (isloggedin() && ($current !== false) ) {
     } else {
         echo $OUTPUT->box(get_string("yourselection", "groupmanagement", userdate($groupmanagement->timeopen)).": ".format_string($current->name), 'generalbox', 'yourselection');
     }
+}
+
+if(isset($error) && $error == 1) {
+    echo $OUTPUT->box(get_string('incorrectEnrollementKey', 'groupmanagement'), 'generalbox enrollementKey enrollementKeyError');
 }
 
 if ($groupmanagement->freezegroups == 1 || (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime)) {

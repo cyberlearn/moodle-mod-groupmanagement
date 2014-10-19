@@ -26,7 +26,9 @@
 .path-mod-groupmanagement .results.names .header{width:10%; white-space: normal;}
 .path-mod-groupmanagement .results.names .cell{vertical-align: top; text-align: left;}
 .path-mod-groupmanagement .results.names .user,
+.path-mod-groupmanagement .enrollementKeyError,
 .path-mod-groupmanagement #yourselection {padding: 5px;}
+.path-mod-groupmanagement .enrollementKeyError {color: red;}
 .path-mod-groupmanagement .results.names .user .attemptaction,
 .path-mod-groupmanagement .results.names .user .image,
 .path-mod-groupmanagement .results.names .user .fullname{float:left;}

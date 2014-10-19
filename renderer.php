@@ -245,8 +245,9 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
             } else {
                 if (!$disabled) {
                     foreach ($private_groups_id as $private_group_id) {
-                        $groupName = 'Groupname';
-                        $html .= html_writer::tag('label', get_string('passwordforgroupmanagement', 'groupmanagement').' '.$groupName, array('name'=>'label'.$private_group_id, 'for'=>'enrollementKeyKey'.$private_group_id, 'id'=>'enrollementKeyLabel'.$private_group_id, 'class'=>'enrollementKey', 'style'=>'display: none;'));
+                        $groupmanagement_option = $DB->get_record('groupmanagement_options', array('id'=>$private_group_id));
+                        $groupName = $groupmanagement_groups[$groupmanagement_option->groupid]->name;
+                        $html .= html_writer::tag('label', get_string('enrollementKeyForgroupmanagement', 'groupmanagement').' '.$groupName, array('for'=>'enrollementKeyKey'.$private_group_id, 'id'=>'enrollementKeyLabel'.$private_group_id, 'class'=>'enrollementKey', 'style'=>'display: none;'));
                         $html .= html_writer::empty_tag('input', array('type'=>'password', 'name'=>'enrollementKeyKey'.$private_group_id, 'id'=>'enrollementKeyKey'.$private_group_id, 'class'=>'enrollementKey', 'style'=>'display: none;'));
                     }
                     if ($groupmanagement->freezegroups == 0 && (empty($groupmanagement->freezegroupsaftertime) || time() < $groupmanagement->freezegroupsaftertime)) {

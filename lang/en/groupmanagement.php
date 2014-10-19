@@ -141,7 +141,8 @@ $string['collapse_all_groupings'] = 'Collapse All Groupings';
 $string['double_click_grouping_legend'] = 'Double click on a grouping to expand/collapse individually.';
 $string['double_click_group_legend'] = 'Double click on a group to add it.';
 
-$string['passwordforgroupmanagement'] = 'Password for the group';
+$string['enrollementKeyForgroupmanagement'] = 'Enrollement key for the group';
+$string['incorrectEnrollementKey'] = 'Incorrect enrollement key';
 $string['creategroup'] = 'Create a group';
 $string['groupselectionlocked'] = 'The group selection has been manualy locked';
 $string['groupselectionlockedon'] = 'The group selection has been locked on';
