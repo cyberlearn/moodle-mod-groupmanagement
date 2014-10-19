@@ -141,4 +141,22 @@ $string['collapse_all_groupings'] = 'Collapse All Groupings';
 $string['double_click_grouping_legend'] = 'Double click on a grouping to expand/collapse individually.';
 $string['double_click_group_legend'] = 'Double click on a group to add it.';
 
-
+$string['passwordforgroupmanagement'] = 'Password for the group';
+$string['creategroup'] = 'Create a group';
+$string['groupselectionlocked'] = 'The group selection has been manualy locked';
+$string['groupselectionlockedon'] = 'The group selection has been locked on';
+$string['videopresentation'] = 'Video presentation';
+$string['private'] = 'Private';
+$string['privategroup'] = 'Private group';
+$string['groupcreator'] = 'Group creator';
+$string['contact'] = 'Contact';
+$string['freezegroups'] = 'Freeze groups';
+$string['freezegroupsaftertime'] = 'Freeze groups after date';
+$string['displaygrouppicture'] = 'Display group pictures';
+$string['displaygroupvideo'] = 'Display group video';
+$string['groupcreationpossible'] = 'Allow group creation by students';
+$string['privategrouppossible'] = 'Allow private groups';
+$string['limitmaxgroups'] = 'Limit the number of groups allowed';
+$string['maxgroups'] = 'Group limitation';
+$string['group_video'] = 'Group video';
+$string['group_password'] = 'Group password';
