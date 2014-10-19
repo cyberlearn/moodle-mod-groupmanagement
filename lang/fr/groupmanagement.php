@@ -47,7 +47,7 @@ $string['groupmanagementoptions'] = 'Options des choix';
 $string['groupmanagementoptions_help'] = 'Spécifier les options que les participants ont à choisir.
 
 Vous pouvez remplir un certain nombre d\'options. Si vous laissez quelques-unes des options vierges, elles ne seront pas affichées. Si vous avez besoin de plus d\'options, cliquez sur le bouton "Ajouter trois champs".';
-$string['limitanswers_help'] = 'Cette option vous permet de limiter le nombre de participants dans un groupe. Lorsque la limite est atteinte, personne d\'autre ne peut sélectionner ce groupe.
+$string['limitmaxusersingroups_help'] = 'Cette option vous permet de limiter le nombre de participants dans un groupe. Lorsque la limite est atteinte, personne d\'autre ne peut sélectionner ce groupe.
 
 Si les limites sont désactivées, n\'importe quel nombre de participants peut s\'inscrire dans le groupe.';
 $string['groupmanagement:addinstance'] = 'Ajouter un nouveau choix de groupe';
@@ -57,7 +57,7 @@ $string['choicetext'] = 'Texte';
 $string['chooseaction'] = 'Choisir une action...';
 $string['choosegroup'] = 'Choisir un groupe';
 $string['limit'] = 'Limite';
-$string['limitanswers'] = 'Limiter le nombre de réponses';
+$string['limitmaxusersingroups'] = 'Limiter le nombre de réponses';
 $string['modulename'] = 'Choix de Groupe';
 $string['modulename_help'] = 'Le module "Choix de Groupe" permet à l\'enseignant de laisser l\'étudiant choisir un groupe.';
 $string['modulenameplural'] = 'Choix de Groupe';

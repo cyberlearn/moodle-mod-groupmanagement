@@ -20,7 +20,7 @@ YUI.add('moodle-mod_groupmanagement-form', function(Y) {
 			LIMIT_UI_DIV: '#fitem_id_limit_0',
 			LIMIT_UI_LABEL: '#label_for_limit_ui',
 			APPLY_LIMIT_TO_ALL_GRPS_BTN: '#id_setlimit',
-			ENABLE_DISABLE_LIMITING_SELECT: '#id_limitanswers',
+			ENABLE_DISABLE_LIMITING_SELECT: '#id_limitmaxusersingroups',
 			EXPAND_ALL_GRPNGS_BTN: '#expandButton',
 			COLLAPSE_ALL_GRPNGS_BTN: '#collapseButton',
 			SERIALIZED_SELECTED_GRPS_LIST: '#serializedselectedgroups',
@@ -48,7 +48,7 @@ YUI.add('moodle-mod_groupmanagement-form', function(Y) {
 				var formNode = Y.one(SELECTORS.FORM);
 				var uiInputLimitNode = Y.one(SELECTORS.LIMIT_UI_INPUT);
 				var applyLimitToAllGroupsButtonNode = Y.one(SELECTORS.APPLY_LIMIT_TO_ALL_GRPS_BTN);
-				var limitAnswersSelectNode = Y.one(SELECTORS.ENABLE_DISABLE_LIMITING_SELECT);
+				var limitmaxusersingroupsSelectNode = Y.one(SELECTORS.ENABLE_DISABLE_LIMITING_SELECT);
 				var limitInputUIDIVNode = Y.one(SELECTORS.LIMIT_UI_DIV);
 				var expandButtonNode = Y.one(SELECTORS.EXPAND_ALL_GRPNGS_BTN);
 				var collapseButtonNode = Y.one(SELECTORS.COLLAPSE_ALL_GRPNGS_BTN);
@@ -107,7 +107,7 @@ YUI.add('moodle-mod_groupmanagement-form', function(Y) {
 					} else {
 						selectedGroupsNode.append(optNode.cloneNode(true));
 					}
-                    if (limitAnswersSelectNode.get('value') == '1') {
+                    if (limitmaxusersingroupsSelectNode.get('value') == '1') {
                         updateLimitUIOfAllSelectedGroups();
                     }
 				}
@@ -252,7 +252,7 @@ YUI.add('moodle-mod_groupmanagement-form', function(Y) {
 				collapseAllGroupings();
 				expandButtonNode.set('disabled', false);
                 // If necessary update their limit information
-				if (limitAnswersSelectNode.get('value') == '1') { // limiting is enabled, show limit box
+				if (limitmaxusersingroupsSelectNode.get('value') == '1') { // limiting is enabled, show limit box
                     updateLimitUIOfAllSelectedGroups();
                 }
 
@@ -376,7 +376,7 @@ YUI.add('moodle-mod_groupmanagement-form', function(Y) {
 						uiInputLimitNode.set('disabled', false);
 						uiInputLimitNode.set('value', getInputLimitNodeOfSelectedGroupNode(selectedOptionsNodes.item(0)).get('value'));
 						Y.one(SELECTORS.LIMIT_UI_LABEL).set('text', M.util.get_string('set_limit_for_group', 'groupmanagement') + getGroupNameWithoutLimitText(selectedOptionsNodes.item(0)) + ":");
-						if (limitAnswersSelectNode.get('value') == '1') { // limiting is enabled, show limit box
+						if (limitmaxusersingroupsSelectNode.get('value') == '1') { // limiting is enabled, show limit box
 							limitInputUIDIVNode.show();
 						}
 
@@ -407,8 +407,8 @@ YUI.add('moodle-mod_groupmanagement-form', function(Y) {
 					});
 				});
 
-				limitAnswersSelectNode.on('change', function(e) {
-					if (limitAnswersSelectNode.get('value') == '1') { // limiting is enabled, show limit box
+				limitmaxusersingroupsSelectNode.on('change', function(e) {
+					if (limitmaxusersingroupsSelectNode.get('value') == '1') { // limiting is enabled, show limit box
 						var selectedOptionsNodes = Y.all(SELECTORS.SELECTED_GRPS_SELECT + " option:checked");
 						if (selectedOptionsNodes.size() == 1) {
 							limitInputUIDIVNode.show();

@@ -47,7 +47,7 @@ $string['groupmanagementoptions'] = 'Valalternativ';
 $string['groupmanagementoptions_help'] = 'Här specificerar du alternativen som deltagarna kan välja mellan.
 
 Du kan fylla i hur många som helst. Om du lämnar alternativ tomma, kommer dessa inte att visas. Om du behöver fler alternativ, klicka på "Lägg till 3 fält till formuläret"-knappen.';
-$string['limitanswers_help'] = 'Det här alternativet gör att du kan begränsa antalet deltagare som kan välja respektive alternativ. När maxgränsen är nådd kan inga fler välja det alternativet.
+$string['limitmaxusersingroups_help'] = 'Det här alternativet gör att du kan begränsa antalet deltagare som kan välja respektive alternativ. När maxgränsen är nådd kan inga fler välja det alternativet.
 
 Om maxgränser är avaktiverade, kan grupperna innehålla obegränsat antal medlemmar.';
 $string['groupmanagement:addinstance'] = 'Lägg till en ny gruppvalsaktivitet';
@@ -57,7 +57,7 @@ $string['choicetext'] = 'Text för valet';
 $string['chooseaction'] = 'Välj en åtgärd ...';
 $string['choosegroup'] = 'Välj en grupp';
 $string['limit'] = 'Gräns';
-$string['limitanswers'] = 'Begränsa antalet tillåtna svar';
+$string['limitmaxusersingroups'] = 'Begränsa antalet tillåtna svar';
 $string['modulename'] = 'Gruppval';
 $string['modulename_help'] = 'Gruppvalsmodulen tillåter studenter att anmäla sig till grupper inom en kurs. Läraren kan specificera vilka grupper studenter kan välja från och begränsa antalet studenter tillåtna i varje grupp.';
 $string['modulenameplural'] = 'Gruppval';

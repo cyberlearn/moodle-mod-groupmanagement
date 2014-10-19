@@ -46,7 +46,7 @@ $string['groupmanagementoptions'] = 'Valiku sätted';
 $string['groupmanagementoptions_help'] = 'Siin märgid Sa ära valikud, mille vahel osalejad valiku tegema peavad.
 
 Võid kasutada just soovitud hulka valikuid. Täitmata jäetud valikuid õppijatele ei näidata. Kui vajad veel rohkem valikuid, siis klõpsa nupul "Lisa vormi veel 3 välja".';
-$string['limitanswers_help'] = 'See valik võimaldab piirata osalejate arvu, kes saavad välja pakutud valikuga liituda. Kui piirarv täis saab, siis ei saa keegi teine seda valikut enam teha.
+$string['limitmaxusersingroups_help'] = 'See valik võimaldab piirata osalejate arvu, kes saavad välja pakutud valikuga liituda. Kui piirarv täis saab, siis ei saa keegi teine seda valikut enam teha.
 
 Kui piirarvud ei ole sisse lülitatud, siis saab iga rühmaga liituda piiramatu arv liikmeid.';
 $string['groupmanagement:addinstance'] = 'Lisa uus rühma valimise tegevus';
@@ -56,7 +56,7 @@ $string['choicetext'] = 'Rühma valiku tekst';
 $string['chooseaction'] = 'Vali tegevus...';
 $string['choosegroup'] = 'Vali rühm';
 $string['limit'] = 'Piirarv';
-$string['limitanswers'] = 'Piira lubatud liikmete arvu rühmades';
+$string['limitmaxusersingroups'] = 'Piira lubatud liikmete arvu rühmades';
 $string['modulename'] = 'Rühma valimine';
 $string['modulename_help'] = 'Rühma valimise moodul võimaldab õppijatel iseseisvalt valida endale sobiva rühma.';
 $string['modulenameplural'] = 'Rühma valikud';

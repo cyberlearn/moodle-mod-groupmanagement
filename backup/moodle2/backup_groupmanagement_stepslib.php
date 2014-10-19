@@ -37,7 +37,7 @@ class backup_groupmanagement_activity_structure_step extends backup_activity_str
         $groupmanagement = new backup_nested_element('groupmanagement', array('id'), array(
             'name', 'intro', 'introformat', 'publish',
             'showresults', 'display', 'allowupdate', 'allowunanswered',
-            'limitanswers', 'timeopen', 'timeclose', 'timemodified',
+            'limitmaxusersingroups', 'timeopen', 'timeclose', 'timemodified',
             'completionsubmit'));
 
         $options = new backup_nested_element('options');

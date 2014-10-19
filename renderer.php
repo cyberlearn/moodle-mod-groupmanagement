@@ -38,7 +38,7 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
      * @param bool $vertical
      * @return string
      */
-    public function display_options($options, $coursemoduleid, $vertical = true, $publish = false, $limitanswers = false, $showresults = false, $current = false, $groupmanagementopen = false, $disabled = false, $multipleenrollmentspossible = false) {
+    public function display_options($options, $coursemoduleid, $vertical = true, $publish = false, $limitmaxusersingroups = false, $showresults = false, $current = false, $groupmanagementopen = false, $disabled = false, $multipleenrollmentspossible = false) {
         global $DB, $PAGE, $USER, $OUTPUT, $course, $groupmanagement_groups, $groupmanagement_users, $groupmanagement;
 
         $PAGE->requires->js('/mod/groupmanagement/javascript.js');
@@ -61,7 +61,7 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
         if ( $showresults == GROUPMANAGEMENT_SHOWRESULTS_ALWAYS or
         ($showresults == GROUPMANAGEMENT_SHOWRESULTS_AFTER_ANSWER and $current) or
         ($showresults == GROUPMANAGEMENT_SHOWRESULTS_AFTER_CLOSE and !$groupmanagementopen)) {
-            if ($limitanswers) {
+            if ($limitmaxusersingroups) {
                 $html .= html_writer::tag('th', get_string('members/max', 'groupmanagement'));
             } else {
                 $html .= html_writer::tag('th', get_string('members/', 'groupmanagement'));
@@ -139,7 +139,7 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
                                                    WHERE groupid = ? 
                                                    ORDER BY fullname ASC', array($group->id));
 
-            if (!empty($option->attributes->disabled) || ($limitanswers && sizeof($group_members) >= $option->maxanswers)) {
+            if (!empty($option->attributes->disabled) || ($limitmaxusersingroups && sizeof($group_members) >= $option->maxanswers)) {
                 $labeltext .= ' ' . html_writer::tag('em', get_string('full', 'groupmanagement'));
                 $option->attributes->disabled=true;
                 $availableoption--;
@@ -173,8 +173,8 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
             ($showresults == GROUPMANAGEMENT_SHOWRESULTS_AFTER_ANSWER and $current) or
             ($showresults == GROUPMANAGEMENT_SHOWRESULTS_AFTER_CLOSE and !$groupmanagementopen)) {
 
-                $maxanswers = ($limitanswers) ? (' / '.$option->maxanswers) : ('');
-                $html .= html_writer::tag('td', sizeof($group_members_names).$maxanswers, array('class' => 'center'));
+                $maxanswers = ($limitmaxusersingroups) ? (' / '.$option->maxanswers) : ('');
+                $html .= html_writer::tag('td', sizeof($group_members).$maxanswers, array('class' => 'center'));
 
                 $privateImage = '';
                 if (isset($option->enrollementkey)) {
@@ -246,8 +246,8 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
                 if (!$disabled) {
                     foreach ($private_groups_id as $private_group_id) {
                         $groupName = 'Groupname';
-                        $html .= html_writer::tag('label', get_string('passwordforgroupmanagement', 'groupmanagement').' '.$groupName, array('name'=>'label'.$private_group_id, 'for'=>'password'.$private_group_id, 'id'=>'label'.$private_group_id, 'class'=>'enrollementKey', 'style'=>'display: none;'));
-                        $html .= html_writer::empty_tag('input', array('type'=>'password', 'name'=>'password'.$private_group_id, 'id'=>'password'.$private_group_id, 'class'=>'enrollementKey', 'style'=>'display: none;'));
+                        $html .= html_writer::tag('label', get_string('passwordforgroupmanagement', 'groupmanagement').' '.$groupName, array('name'=>'label'.$private_group_id, 'for'=>'enrollementKeyKey'.$private_group_id, 'id'=>'enrollementKeyLabel'.$private_group_id, 'class'=>'enrollementKey', 'style'=>'display: none;'));
+                        $html .= html_writer::empty_tag('input', array('type'=>'password', 'name'=>'enrollementKeyKey'.$private_group_id, 'id'=>'enrollementKeyKey'.$private_group_id, 'class'=>'enrollementKey', 'style'=>'display: none;'));
                     }
                     if ($groupmanagement->freezegroups == 0 && (empty($groupmanagement->freezegroupsaftertime) || time() < $groupmanagement->freezegroupsaftertime)) {
                         $html .= html_writer::empty_tag('input', array('type'=>'submit', 'value'=>get_string('savemygroupmanagement','groupmanagement'), 'class'=>'button', 'style' => $initiallyHideSubmitButton?'display: none':''));

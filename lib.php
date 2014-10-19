@@ -334,7 +334,7 @@ function groupmanagement_prepare_options($groupmanagement, $user, $coursemodule,
 
     $cdisplay = array('options'=>array());
 
-    $cdisplay['limitanswers'] = true;
+    $cdisplay['limitmaxusersingroups'] = true;
     $context = context_module::instance($coursemodule->id);
     $answers = groupmanagement_get_user_answer($groupmanagement, $user, TRUE);
 
@@ -362,7 +362,7 @@ function groupmanagement_prepare_options($groupmanagement, $user, $coursemodule,
                     }
                 }
             }
-            if ( $groupmanagement->limitanswers && ($option->countanswers >= $option->maxanswers) && empty($option->attributes->checked)) {
+            if ($groupmanagement->limitmaxusersingroups && ($option->countanswers >= $option->maxanswers) && empty($option->attributes->checked)) {
                 $option->attributes->disabled = true;
             }
             $cdisplay['options'][] = $option;
@@ -405,13 +405,13 @@ function groupmanagement_user_submit_response($formanswer, $groupmanagement, $us
     $selectedgroup = $DB->get_record('groups', array('id' => $selected_option->groupid), 'id,name', MUST_EXIST);
 
     $countanswers=0;
-    if($groupmanagement->limitanswers) {
+    if($groupmanagement->limitmaxusersingroups) {
         $groupmembers = $DB->get_records('groups_members', array('groupid' => $selected_option->groupid));
         $countanswers = count($groupmembers);
         $maxans = $groupmanagement->maxanswers[$formanswer];
     }
 
-    if (!($groupmanagement->limitanswers && ($countanswers >= $maxans) )) {
+    if (!($groupmanagement->limitmaxusersingroups && ($countanswers >= $maxans) )) {
         groups_add_member($selected_option->groupid, $userid);
         if ($current) {
             if (!($groupmanagement->multipleenrollmentspossible == 1)) {
@@ -624,7 +624,7 @@ function prepare_groupmanagement_show_results($groupmanagement, $course, $cm, $a
 
             foreach ($groupmanagement->option as $optionid => $optiontext) {
                 echo "<td align=\"center\" class=\"col$count count\">";
-                if ($groupmanagement->limitanswers) {
+                if ($groupmanagement->limitmaxusersingroups) {
                     echo get_string("taken", "groupmanagement").":";
                     echo $columncount[$optionid];
                     echo "<br/>";
@@ -807,6 +807,9 @@ function groupmanagement_get_groupmanagement($groupmanagementid) {
             foreach ($options as $option) {
                 $groupmanagement->option[$option->id] = $option->groupid;
                 $groupmanagement->maxanswers[$option->id] = $option->maxanswers;
+                $groupmanagement->groupvideo[$option->id] = $option->groupvideo;
+                $groupmanagement->creatorid[$option->id] = $option->creatorid;
+                $groupmanagement->enrollementkey[$option->id] = $option->enrollementkey;
             }
             return $groupmanagement;
         }

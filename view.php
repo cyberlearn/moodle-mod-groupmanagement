@@ -139,7 +139,7 @@ if (data_submitted() && is_enrolled($context, NULL, 'mod/groupmanagement:choose'
         if (empty($answer)) {
             redirect("view.php?id=$cm->id", get_string('mustchooseone', 'groupmanagement'));
         } else {
-            $enrollementkey = optional_param('enrollementkey'.$answer, '', PARAM_TEXT);
+            $enrollementkey = optional_param('enrollementKeyKey'.$answer, '', PARAM_TEXT);
             $selected_option = $DB->get_record('groupmanagement_options', array('id' => $answer));
 
             if (!empty($selected_option->enrollementkey)) {
@@ -234,10 +234,10 @@ $renderer = $PAGE->get_renderer('mod_groupmanagement');
 if ( (!$current or $groupmanagement->allowupdate) and $groupmanagementopen and is_enrolled($context, NULL, 'mod/groupmanagement:choose')) {
 // They haven't made their groupmanagement yet or updates allowed and groupmanagement is open
 
-    echo $renderer->display_options($options, $cm->id, $groupmanagement->display, $groupmanagement->publish, $groupmanagement->limitanswers, $groupmanagement->showresults, $current, $groupmanagementopen, false, $groupmanagement->multipleenrollmentspossible);
+    echo $renderer->display_options($options, $cm->id, $groupmanagement->display, $groupmanagement->publish, $groupmanagement->limitmaxusersingroups, $groupmanagement->showresults, $current, $groupmanagementopen, false, $groupmanagement->multipleenrollmentspossible);
 } else {
     // form can not be updated
-    echo $renderer->display_options($options, $cm->id, $groupmanagement->display, $groupmanagement->publish, $groupmanagement->limitanswers, $groupmanagement->showresults, $current, $groupmanagementopen, true, $groupmanagement->multipleenrollmentspossible);
+    echo $renderer->display_options($options, $cm->id, $groupmanagement->display, $groupmanagement->publish, $groupmanagement->limitmaxusersingroups, $groupmanagement->showresults, $current, $groupmanagementopen, true, $groupmanagement->multipleenrollmentspossible);
 }
 $groupmanagementformshown = true;
 

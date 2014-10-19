@@ -106,16 +106,16 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 		$menuoptions = array();
 		$menuoptions[0] = get_string('disable');
 		$menuoptions[1] = get_string('enable');
-		$mform->addElement('select', 'limitanswers', get_string('limitanswers', 'groupmanagement'), $menuoptions);
-		$mform->addHelpButton('limitanswers', 'limitanswers', 'groupmanagement');
+		$mform->addElement('select', 'limitmaxusersingroups', get_string('limitmaxusersingroups', 'groupmanagement'), $menuoptions);
+		$mform->addHelpButton('limitmaxusersingroups', 'limitmaxusersingroups', 'groupmanagement');
 
 		$mform->addElement('text', 'generallimitation', get_string('generallimitation', 'groupmanagement'), array('size' => '6'));
 		$mform->setType('generallimitation', PARAM_INT);
-		$mform->disabledIf('generallimitation', 'limitanswers', 'neq', 1);
+		$mform->disabledIf('generallimitation', 'limitmaxusersingroups', 'neq', 1);
 		$mform->addRule('generallimitation', get_string('error'), 'numeric', 'extraruledata', 'client', false, false);
 		$mform->setDefault('generallimitation', 0);
 		$mform->addElement('button', 'setlimit', get_string('applytoallgroups', 'groupmanagement'));
-		$mform->disabledIf('setlimit', 'limitanswers', 'neq', 1);
+		$mform->disabledIf('setlimit', 'limitmaxusersingroups', 'neq', 1);
 
 
 		// -------------------------

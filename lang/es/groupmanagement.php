@@ -51,7 +51,7 @@ $string['groupmanagementoptions_help'] = 'Opciones de elección.
 Aquí es donde se especifica las opciones entre las que los participantes podrán escoger.
 
 Puede rellenar cualquier número de éstas. Si deja en blanco algunas de las opciones disponibles, éstas no se mostrarán. Si necesita añadir más, haga clic en el botón "Agregar 3 campos para formar.';
-$string['limitanswers_help'] = 'Esta opción le permite limitar el número de participantes que pueden seleccionar cada opción. Cuando se alcanza el límite, nadie más puede seleccionar esa opción.
+$string['limitmaxusersingroups_help'] = 'Esta opción le permite limitar el número de participantes que pueden seleccionar cada opción. Cuando se alcanza el límite, nadie más puede seleccionar esa opción.
 
 Si está desactivada, cualquier número de participantes puede seleccionar cualquiera de las opciones.';
 $string['groupmanagement:addinstance'] = 'Añadir una nueva actividad de elección de grupo';
@@ -61,7 +61,7 @@ $string['choicetext'] = 'Texto elección';
 $string['chooseaction'] = 'Escoja una acción ...';
 $string['choosegroup'] = 'Escoja un grupo';
 $string['limit'] = 'Límite';
-$string['limitanswers'] = 'Limitar el número de respuestas permitidas';
+$string['limitmaxusersingroups'] = 'Limitar el número de respuestas permitidas';
 $string['modulename'] = 'Elección de grupo';
 $string['modulename_help'] = 'El módulo de opción permite hacer al profesor una pregunta y especifica una serie de respuestas múltiples.';
 $string['modulenameplural'] = 'Opciones de grupo';

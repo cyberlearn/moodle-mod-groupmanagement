@@ -47,7 +47,7 @@ $string['groupmanagementoptions'] = 'Choice options';
 $string['groupmanagementoptions_help'] = 'Here is where you specify the options that participants have to choose from.
 
 You can fill in any number of these. If you leave some of the options blank, they will not be displayed. If you need more options, click the "Add 3 fields to form" button.';
-$string['limitanswers_help'] = 'This option allows you to limit the number of participants that can select each choice option. When the limit is reached then no-one else can select that option.
+$string['limitmaxusersingroups_help'] = 'This option allows you to limit the number of participants that can select each choice option. When the limit is reached then no-one else can select that option.
 
 If limits are disabled then any number of participants can select each of the options.';
 $string['groupmanagement:addinstance'] = 'Add a new group management activity';
@@ -57,7 +57,7 @@ $string['choicetext'] = 'Choice text';
 $string['chooseaction'] = 'Choose an action ...';
 $string['choosegroup'] = 'Choose a group';
 $string['limit'] = 'Limit';
-$string['limitanswers'] = 'Limit the number of responses allowed';
+$string['limitmaxusersingroups'] = 'Limit the number of responses allowed';
 $string['modulename'] = 'Group management';
 $string['modulename_help'] = 'The Group Management module allows students to enrol themselves in a group within a course. The teacher can select which groups students can chose from and the maximum number of students allowed in each group.';
 $string['modulenameplural'] = 'Group management';
@@ -158,5 +158,5 @@ $string['groupcreationpossible'] = 'Allow group creation by students';
 $string['privategrouppossible'] = 'Allow private groups';
 $string['limitmaxgroups'] = 'Limit the number of groups allowed';
 $string['maxgroups'] = 'Group limitation';
-$string['group_video'] = 'Group video';
-$string['group_password'] = 'Group password';
+$string['groupvideo'] = 'YouTube video';
+$string['groupenrollementkey'] = 'Group enrollement key';

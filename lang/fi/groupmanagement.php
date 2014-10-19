@@ -47,7 +47,7 @@ $string['groupmanagementoptions_help'] = '<P ALIGN=CENTER><B>Valinnan vaihtoehdo
 <p>Täällä määrittelet vaihtoehdot/ryhmät, joista kurssilaiset voivat valita vastauksensa.</p>
 
 <p>Voit täyttää näistä niin monta kuin haluat: voit myös jättää joitain kohtia tyhjäksi, jos et tarvitse kaikkia kuutta vaihtoehtoa.</p>';
-$string['limitanswers_help'] = '<h2>Määrien rajoittaminen valintavaihtoehdoissa</h2>
+$string['limitmaxusersingroups_help'] = '<h2>Määrien rajoittaminen valintavaihtoehdoissa</h2>
 
 <p>Tällä asetuksella aktivoit valintavaihtoehtojen valitsemisen määrällisen rajoittamisen.</p>
 
@@ -65,7 +65,7 @@ $string['choicetext'] = 'Ryhmävalinnan teksti';
 $string['chooseaction'] = 'Valitse toiminto ...';
 $string['choosegroup'] = 'Valitse ryhmä';
 $string['limit'] = 'Raja';
-$string['limitanswers'] = 'Rajoita vastausten määrää';
+$string['limitmaxusersingroups'] = 'Rajoita vastausten määrää';
 $string['modulename'] = 'Ryhmävalinta';
 $string['modulename_help'] = 'Ryhmävalinta-aktiviteetin toiminta on yksinkertainen: opettaja tekee ryhmät ja antaa sitten useita ryhmävaihtoehtoja, joista opiskelija voi valita tasan yhden.  
 
