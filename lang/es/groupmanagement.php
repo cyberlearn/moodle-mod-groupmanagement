@@ -39,24 +39,24 @@ $string['fillinatleasttwooptions'] = 'Necesitas dar al menos dos respuestas.';
 $string['full'] = '(Completo)';
 $string['havetologin'] = 'Necesias iniciar sesión antes de elegir opción';
 $string['choice'] = 'Elección';
-$string['choicegroupclose'] = 'Hasta';
-$string['choicegroup:deleteresponses'] = 'Eliminar respuestas';
-$string['choicegroup:downloadresponses'] = 'Descargar respuestas';
-$string['choicegroupfull'] = 'Esta opción de grupo está completa y no hay plazas disponibles.';
-$string['choicegroup:choose'] = 'Guardar elección';
-$string['choicegroupname'] = 'Nombre de la opción de grupo';
-$string['choicegroupopen'] = 'Abrir';
-$string['choicegroupoptions'] = 'Opciones del grupo';
-$string['choicegroupoptions_help'] = 'Opciones de elección.
+$string['groupmanagementclose'] = 'Hasta';
+$string['groupmanagement:deleteresponses'] = 'Eliminar respuestas';
+$string['groupmanagement:downloadresponses'] = 'Descargar respuestas';
+$string['groupmanagementfull'] = 'Esta opción de grupo está completa y no hay plazas disponibles.';
+$string['groupmanagement:choose'] = 'Guardar elección';
+$string['groupmanagementname'] = 'Nombre de la opción de grupo';
+$string['groupmanagementopen'] = 'Abrir';
+$string['groupmanagementoptions'] = 'Opciones del grupo';
+$string['groupmanagementoptions_help'] = 'Opciones de elección.
 Aquí es donde se especifica las opciones entre las que los participantes podrán escoger.
 
 Puede rellenar cualquier número de éstas. Si deja en blanco algunas de las opciones disponibles, éstas no se mostrarán. Si necesita añadir más, haga clic en el botón "Agregar 3 campos para formar.';
 $string['limitanswers_help'] = 'Esta opción le permite limitar el número de participantes que pueden seleccionar cada opción. Cuando se alcanza el límite, nadie más puede seleccionar esa opción.
 
 Si está desactivada, cualquier número de participantes puede seleccionar cualquiera de las opciones.';
-$string['choicegroup:addinstance'] = 'Añadir una nueva actividad de elección de grupo';
-$string['choicegroup:readresponses'] = 'Leer respuestas';
-$string['choicegroupsaved'] = 'Tu elección ha sido guardada';
+$string['groupmanagement:addinstance'] = 'Añadir una nueva actividad de elección de grupo';
+$string['groupmanagement:readresponses'] = 'Leer respuestas';
+$string['groupmanagementsaved'] = 'Tu elección ha sido guardada';
 $string['choicetext'] = 'Texto elección';
 $string['chooseaction'] = 'Escoja una acción ...';
 $string['choosegroup'] = 'Escoja un grupo';
@@ -85,11 +85,11 @@ $string['publishalways'] = 'Siempre mostrar resultados a los estudiantes';
 $string['publishanonymous'] = 'Publicar los resultados anónimos, no muestran los nombres de estudiantes';
 $string['publishnames'] = 'Publicar todos los resultados, mostrando nombres y sus opciones';
 $string['publishnot'] = 'No publicar resultados a los estudiantes';
-$string['removemychoicegroup'] = 'Eliminar mi elección';
+$string['removemygroupmanagement'] = 'Eliminar mi elección';
 $string['removeresponses'] = 'Eliminar todas las respuestas';
 $string['responses'] = 'Respuestas';
 $string['responsesto'] = 'Respuestas para {$a}';
-$string['savemychoicegroup'] = 'Guardar mi elección';
+$string['savemygroupmanagement'] = 'Guardar mi elección';
 $string['showunanswered'] = 'Mostrar columna para contestar';
 $string['spaceleft'] = 'Plaza disponible';
 $string['spacesleft'] = 'Plazas disponibles';

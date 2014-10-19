@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The mod_choicegroup course module viewed event.
+ * The mod_groupmanagement course module viewed event.
  *
- * @package    mod_choicegroup
+ * @package    mod_groupmanagement
  * @copyright  2014 Université de Lausanne
  * @author     Nicolas Dunand <Nicolas.Dunand@unil.ch>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_choicegroup\event;
+namespace mod_groupmanagement\event;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -37,7 +37,7 @@ class course_module_viewed extends \core\event\course_module_viewed {
     protected function init() {
         $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
-        $this->data['objecttable'] = 'choicegroup';
+        $this->data['objecttable'] = 'groupmanagement';
     }
 
     /**
@@ -46,7 +46,7 @@ class course_module_viewed extends \core\event\course_module_viewed {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/mod/choicegroup/view.php', array('id' => $this->contextinstanceid));
+        return new \moodle_url('/mod/groupmanagement/view.php', array('id' => $this->contextinstanceid));
     }
 
     /**
@@ -55,7 +55,7 @@ class course_module_viewed extends \core\event\course_module_viewed {
      * @return array|null
      */
     protected function get_legacy_logdata() {
-        return array($this->courseid, 'choicegroup', 'view group choice', 'view.php?id=' . $this->contextinstanceid,
+        return array($this->courseid, 'groupmanagement', 'view group management', 'view.php?id=' . $this->contextinstanceid,
             $this->objectid, $this->contextinstanceid);
     }
 

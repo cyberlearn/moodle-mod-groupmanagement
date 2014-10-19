@@ -18,7 +18,7 @@
  * Version information
  *
  * @package    mod
- * @subpackage choicegroup
+ * @subpackage groupmanagement
  * @copyright  2013 Université de Lausanne
  * @author     Nicolas Dunand <Nicolas.Dunand@unil.ch>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -29,13 +29,13 @@ require_once("../../config.php");
 require_once("lib.php");
 
 $id         = required_param('id', PARAM_INT);   //moduleid
-$format     = optional_param('format', CHOICEGROUP_PUBLISH_NAMES, PARAM_INT);
+$format     = optional_param('format', GROUPMANAGEMENT_PUBLISH_NAMES, PARAM_INT);
 $download   = optional_param('download', '', PARAM_ALPHA);
 $action     = optional_param('action', '', PARAM_ALPHA);
 $userids = optional_param_array('userid', array(), PARAM_INT); //get array of responses to delete.
 
-$url = new moodle_url('/mod/choicegroup/report.php', array('id'=>$id));
-if ($format !== CHOICEGROUP_PUBLISH_NAMES) {
+$url = new moodle_url('/mod/groupmanagement/report.php', array('id'=>$id));
+if ($format !== GROUPMANAGEMENT_PUBLISH_NAMES) {
     $url->param('format', $format);
 }
 if ($download !== '') {
@@ -46,7 +46,7 @@ if ($action !== '') {
 }
 $PAGE->set_url($url);
 
-if (! $cm = get_coursemodule_from_id('choicegroup', $id)) {
+if (! $cm = get_coursemodule_from_id('groupmanagement', $id)) {
     print_error("invalidcoursemodule");
 }
 
@@ -58,57 +58,57 @@ require_login($course->id, false, $cm);
 
 $context = context_module::instance($cm->id);
 
-require_capability('mod/choicegroup:readresponses', $context);
+require_capability('mod/groupmanagement:readresponses', $context);
 
-if (!$choicegroup = choicegroup_get_choicegroup($cm->instance)) {
+if (!$groupmanagement = groupmanagement_get_groupmanagement($cm->instance)) {
     print_error('invalidcoursemodule');
 }
 
-$strchoicegroup = get_string("modulename", "choicegroup");
-$strchoicegroups = get_string("modulenameplural", "choicegroup");
-$strresponses = get_string("responses", "choicegroup");
+$strgroupmanagement = get_string("modulename", "groupmanagement");
+$strgroupmanagements = get_string("modulenameplural", "groupmanagement");
+$strresponses = get_string("responses", "groupmanagement");
 
 $eventparams = array(
     'context' => $context,
-    'objectid' => $choicegroup->id
+    'objectid' => $groupmanagement->id
 );
-$event = \mod_choicegroup\event\report_viewed::create($eventparams);
+$event = \mod_groupmanagement\event\report_viewed::create($eventparams);
 $event->add_record_snapshot('course_modules', $cm);
 $event->add_record_snapshot('course', $course);
-$event->add_record_snapshot('choicegroup', $choicegroup);
+$event->add_record_snapshot('groupmanagement', $groupmanagement);
 $event->trigger();
 
-if (data_submitted() && $action == 'delete' && has_capability('mod/choicegroup:deleteresponses',$context) && confirm_sesskey()) {
-    choicegroup_delete_responses($userids, $choicegroup, $cm, $course); //delete responses.
+if (data_submitted() && $action == 'delete' && has_capability('mod/groupmanagement:deleteresponses',$context) && confirm_sesskey()) {
+    groupmanagement_delete_responses($userids, $groupmanagement, $cm, $course); //delete responses.
     redirect("report.php?id=$cm->id");
 }
 
 if (!$download) {
     $PAGE->navbar->add($strresponses);
-    $PAGE->set_title(format_string($choicegroup->name).": $strresponses");
+    $PAGE->set_title(format_string($groupmanagement->name).": $strresponses");
     $PAGE->set_heading($course->fullname);
     echo $OUTPUT->header();
-    /// Check to see if groups are being used in this choicegroup
+    /// Check to see if groups are being used in this groupmanagement
     $groupmode = groups_get_activity_groupmode($cm);
     if ($groupmode) {
         groups_get_activity_group($cm, true);
-        groups_print_activity_menu($cm, $CFG->wwwroot . '/mod/choicegroup/report.php?id='.$id);
+        groups_print_activity_menu($cm, $CFG->wwwroot . '/mod/groupmanagement/report.php?id='.$id);
     }
 } else {
     $groupmode = groups_get_activity_groupmode($cm);
-    $groups = choicegroup_get_groups($choicegroup);
+    $groups = groupmanagement_get_groups($groupmanagement);
     $groups_ids = array();
     foreach($groups as $group) {
         $groups_ids[] = $group->id;
     }
 }
-$users = choicegroup_get_response_data($choicegroup, $cm, $groupmode);
+$users = groupmanagement_get_response_data($groupmanagement, $cm, $groupmode);
 
-if ($download == "ods" && has_capability('mod/choicegroup:downloadresponses', $context)) {
+if ($download == "ods" && has_capability('mod/groupmanagement:downloadresponses', $context)) {
     require_once("$CFG->libdir/odslib.class.php");
 
 /// Calculate file name
-    $filename = clean_filename("$course->shortname ".strip_tags(format_string($choicegroup->name,true))).'.ods';
+    $filename = clean_filename("$course->shortname ".strip_tags(format_string($groupmanagement->name,true))).'.ods';
 /// Creating a workbook
     $workbook = new MoodleODSWorkbook("-");
 /// Send HTTP headers
@@ -122,7 +122,7 @@ if ($download == "ods" && has_capability('mod/choicegroup:downloadresponses', $c
     $myxls->write_string(0,2,get_string("idnumber"));
     $myxls->write_string(0,3,get_string("email"));
     $myxls->write_string(0,4,get_string("group"));
-    $myxls->write_string(0,5,get_string("choice","choicegroup"));
+    $myxls->write_string(0,5,get_string("choice","groupmanagement"));
 
 /// generate the data for the body of the spreadsheet
     $i=0;
@@ -161,17 +161,17 @@ if ($download == "ods" && has_capability('mod/choicegroup:downloadresponses', $c
 }
 
 //print spreadsheet if one is asked for:
-if ($download == "xls" && has_capability('mod/choicegroup:downloadresponses', $context)) {
+if ($download == "xls" && has_capability('mod/groupmanagement:downloadresponses', $context)) {
     require_once("$CFG->libdir/excellib.class.php");
 
 /// Calculate file name
-    $filename = clean_filename("$course->shortname ".strip_tags(format_string($choicegroup->name,true))).'.xls';
+    $filename = clean_filename("$course->shortname ".strip_tags(format_string($groupmanagement->name,true))).'.xls';
 /// Creating a workbook
     $workbook = new MoodleExcelWorkbook("-");
 /// Send HTTP headers
     $workbook->send($filename);
 /// Creating the first worksheet
-    // assigning by reference gives this: Strict standards: Only variables should be assigned by reference in /data_1/www/html/moodle/moodle/mod/choicegroup/report.php on line 157
+    // assigning by reference gives this: Strict standards: Only variables should be assigned by reference in /data_1/www/html/moodle/moodle/mod/groupmanagement/report.php on line 157
     // removed the ampersand.
     $myxls = $workbook->add_worksheet($strresponses);
 /// Print names of all the fields
@@ -180,7 +180,7 @@ if ($download == "xls" && has_capability('mod/choicegroup:downloadresponses', $c
     $myxls->write_string(0,2,get_string("idnumber"));
     $myxls->write_string(0,3,get_string("email"));
     $myxls->write_string(0,4,get_string("group"));
-    $myxls->write_string(0,5,get_string("choice","choicegroup"));
+    $myxls->write_string(0,5,get_string("choice","groupmanagement"));
 
 
 /// generate the data for the body of the spreadsheet
@@ -219,8 +219,8 @@ if ($download == "xls" && has_capability('mod/choicegroup:downloadresponses', $c
 }
 
 // print text file
-if ($download == "txt" && has_capability('mod/choicegroup:downloadresponses', $context)) {
-    $filename = clean_filename("$course->shortname ".strip_tags(format_string($choicegroup->name,true))).'.txt';
+if ($download == "txt" && has_capability('mod/groupmanagement:downloadresponses', $context)) {
+    $filename = clean_filename("$course->shortname ".strip_tags(format_string($groupmanagement->name,true))).'.txt';
 
     header("Content-Type: application/download\n");
     header("Content-Disposition: attachment; filename=\"$filename\"");
@@ -232,7 +232,7 @@ if ($download == "txt" && has_capability('mod/choicegroup:downloadresponses', $c
 
     echo get_string("firstname")."\t".get_string("lastname") . "\t". get_string("idnumber") . "\t";
     echo get_string("group"). "\t";
-    echo get_string("choice","choicegroup"). "\n";
+    echo get_string("choice","groupmanagement"). "\n";
 
     /// generate the data for the body of the spreadsheet
     $i=0;
@@ -267,17 +267,17 @@ if ($download == "txt" && has_capability('mod/choicegroup:downloadresponses', $c
     exit;
 }
 // Show those who haven't answered the question.
-if (!empty($choicegroup->showunanswered)) {
-    $choicegroup->option[0] = get_string('notanswered', 'choicegroup');
-    $choicegroup->maxanswers[0] = 0;
+if (!empty($groupmanagement->showunanswered)) {
+    $groupmanagement->option[0] = get_string('notanswered', 'groupmanagement');
+    $groupmanagement->maxanswers[0] = 0;
 }
 
-$results = prepare_choicegroup_show_results($choicegroup, $course, $cm, $users);
-$renderer = $PAGE->get_renderer('mod_choicegroup');
-echo $renderer->display_result($results, has_capability('mod/choicegroup:readresponses', $context));
+$results = prepare_groupmanagement_show_results($groupmanagement, $course, $cm, $users);
+$renderer = $PAGE->get_renderer('mod_groupmanagement');
+echo $renderer->display_result($results, has_capability('mod/groupmanagement:readresponses', $context));
 
 //now give links for downloading spreadsheets.
-if (!empty($users) && has_capability('mod/choicegroup:downloadresponses',$context)) {
+if (!empty($users) && has_capability('mod/groupmanagement:downloadresponses',$context)) {
     $downloadoptions = array();
     $options = array();
     $options["id"] = "$cm->id";

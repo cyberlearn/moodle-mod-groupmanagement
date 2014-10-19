@@ -19,7 +19,7 @@
  * Definition of log events
  *
  * @package    mod
- * @subpackage choicegroup
+ * @subpackage groupmanagement
  * @copyright  2010 Petr Skoda (http://skodak.org)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,10 +27,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 $logs = array(
-    array('module'=>'choicegroup', 'action'=>'view', 'mtable'=>'choicegroup', 'field'=>'name'),
-    array('module'=>'choicegroup', 'action'=>'update', 'mtable'=>'choicegroup', 'field'=>'name'),
-    array('module'=>'choicegroup', 'action'=>'add', 'mtable'=>'choicegroup', 'field'=>'name'),
-    array('module'=>'choicegroup', 'action'=>'report', 'mtable'=>'choicegroup', 'field'=>'name'),
-    array('module'=>'choicegroup', 'action'=>'choose', 'mtable'=>'choicegroup', 'field'=>'name'),
-    array('module'=>'choicegroup', 'action'=>'choose again', 'mtable'=>'choicegroup', 'field'=>'name'),
+    array('module'=>'groupmanagement', 'action'=>'view', 'mtable'=>'groupmanagement', 'field'=>'name'),
+    array('module'=>'groupmanagement', 'action'=>'update', 'mtable'=>'groupmanagement', 'field'=>'name'),
+    array('module'=>'groupmanagement', 'action'=>'add', 'mtable'=>'groupmanagement', 'field'=>'name'),
+    array('module'=>'groupmanagement', 'action'=>'report', 'mtable'=>'groupmanagement', 'field'=>'name'),
+    array('module'=>'groupmanagement', 'action'=>'choose', 'mtable'=>'groupmanagement', 'field'=>'name'),
+    array('module'=>'groupmanagement', 'action'=>'choose again', 'mtable'=>'groupmanagement', 'field'=>'name'),
 );

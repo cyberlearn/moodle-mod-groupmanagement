@@ -1,69 +1,69 @@
-.path-mod-choicegroup .results {border-collapse: separate;}
-.path-mod-choicegroup .results .data {vertical-align:top;white-space: nowrap;}
-.path-mod-choicegroup .button {text-align:center;}
-.path-mod-choicegroup .attemptcell {width:5px;white-space: nowrap;}
-.path-mod-choicegroup .anonymous,
-.path-mod-choicegroup .names {margin-left:auto;margin-right:auto; width:80%;}
-.path-mod-choicegroup div.downloadreport ul {list-style: none; margin-left: 1em;}
-.path-mod-choicegroup .choicegroupresponse {width:100%;}
-.path-mod-choicegroup .choicegroupresponse .picture {width:10px;white-space: nowrap;}
-.path-mod-choicegroup .choicegroupresponse .fullname {width:100%;white-space: nowrap;}
+.path-mod-groupmanagement .results {border-collapse: separate;}
+.path-mod-groupmanagement .results .data {vertical-align:top;white-space: nowrap;}
+.path-mod-groupmanagement .button {text-align:center;}
+.path-mod-groupmanagement .attemptcell {width:5px;white-space: nowrap;}
+.path-mod-groupmanagement .anonymous,
+.path-mod-groupmanagement .names {margin-left:auto;margin-right:auto; width:80%;}
+.path-mod-groupmanagement div.downloadreport ul {list-style: none; margin-left: 1em;}
+.path-mod-groupmanagement .groupmanagementresponse {width:100%;}
+.path-mod-groupmanagement .groupmanagementresponse .picture {width:10px;white-space: nowrap;}
+.path-mod-groupmanagement .groupmanagementresponse .fullname {width:100%;white-space: nowrap;}
 
-.path-mod-choicegroup .responseheader {width: 100%; text-align: center; margin-top: 10px;}
-.path-mod-choicegroup .choicegroups .option label {vertical-align: top;}
-.path-mod-choicegroup .choicegroups .option input {vertical-align: middle;}
+.path-mod-groupmanagement .responseheader {width: 100%; text-align: center; margin-top: 10px;}
+.path-mod-groupmanagement .groupmanagements .option label {vertical-align: top;}
+.path-mod-groupmanagement .groupmanagements .option input {vertical-align: middle;}
 
-.path-mod-choicegroup .horizontal,
-.path-mod-choicegroup .vertical {margin-left: 10%;margin-right: 10%;}
-.path-mod-choicegroup .horizontal .choicegroups .option {padding-right:20px;display:inline; white-space: normal;}
-.path-mod-choicegroup .horizontal .choicegroups .button {margin-top: 10px;}
-.path-mod-choicegroup ul.choicegroups li {list-style:none;}
-.path-mod-choicegroup .results { text-align: center;}
-.path-mod-choicegroup .results.anonymous .graph.horizontal {vertical-align: middle;text-align: left;width:70%;}
+.path-mod-groupmanagement .horizontal,
+.path-mod-groupmanagement .vertical {margin-left: 10%;margin-right: 10%;}
+.path-mod-groupmanagement .horizontal .groupmanagements .option {padding-right:20px;display:inline; white-space: normal;}
+.path-mod-groupmanagement .horizontal .groupmanagements .button {margin-top: 10px;}
+.path-mod-groupmanagement ul.groupmanagements li {list-style:none;}
+.path-mod-groupmanagement .results { text-align: center;}
+.path-mod-groupmanagement .results.anonymous .graph.horizontal {vertical-align: middle;text-align: left;width:70%;}
 
-.path-mod-choicegroup .results.anonymous .graph.vertical,
-.path-mod-choicegroup .cell {vertical-align: bottom; text-align: center; }
-.path-mod-choicegroup .results.names .header{width:10%; white-space: normal;}
-.path-mod-choicegroup .results.names .cell{vertical-align: top; text-align: left;}
-.path-mod-choicegroup .results.names .user,
-.path-mod-choicegroup #yourselection {padding: 5px;}
-.path-mod-choicegroup .results.names .user .attemptaction,
-.path-mod-choicegroup .results.names .user .image,
-.path-mod-choicegroup .results.names .user .fullname{float:left;}
-.path-mod-choicegroup .results.names .user .fullname{padding-left: 5px;}
-.path-mod-choicegroup .results .data.header {width: 10%;}
-.path-mod-choicegroup .responseaction {text-align: center;}
-.path-mod-choicegroup .results .option {white-space: normal;}
-.path-mod-choicegroup .response {overflow: auto;}
-.path-mod-choicegroup .results .option,
-.path-mod-choicegroup .results .numberofuser,
-.path-mod-choicegroup .results .percentage {font-weight: bold; font-size: 108%;}
+.path-mod-groupmanagement .results.anonymous .graph.vertical,
+.path-mod-groupmanagement .cell {vertical-align: bottom; text-align: center; }
+.path-mod-groupmanagement .results.names .header{width:10%; white-space: normal;}
+.path-mod-groupmanagement .results.names .cell{vertical-align: top; text-align: left;}
+.path-mod-groupmanagement .results.names .user,
+.path-mod-groupmanagement #yourselection {padding: 5px;}
+.path-mod-groupmanagement .results.names .user .attemptaction,
+.path-mod-groupmanagement .results.names .user .image,
+.path-mod-groupmanagement .results.names .user .fullname{float:left;}
+.path-mod-groupmanagement .results.names .user .fullname{padding-left: 5px;}
+.path-mod-groupmanagement .results .data.header {width: 10%;}
+.path-mod-groupmanagement .responseaction {text-align: center;}
+.path-mod-groupmanagement .results .option {white-space: normal;}
+.path-mod-groupmanagement .response {overflow: auto;}
+.path-mod-groupmanagement .results .option,
+.path-mod-groupmanagement .results .numberofuser,
+.path-mod-groupmanagement .results .percentage {font-weight: bold; font-size: 108%;}
 
 #page-mod-choice-report .downloadreport ul li {list-style:none;padding: 0 20px; display: inline;float: left; }
-.path-mod-choicegroup .clearfloat {float:none; clear:both;}
+.path-mod-groupmanagement .clearfloat {float:none; clear:both;}
 
 /**
  * Override for RTL layout
  */
-.path-mod-choicegroup.dir-rtl .horizontal .choicegroups .option {padding-right:0px; padding-left: 20px; float:right;}
-.path-mod-choicegroup.dir-rtl .results.anonymous .graph.horizontal {text-align: right;}
-.path-mod-choicegroup.dir-rtl .results.anonymous { text-align: center; }
-.path-mod-choicegroup.dir-rtl .results.names .cell{text-align: right;}
-.path-mod-choicegroup.dir-rtl .results.names .user .attemptaction,
-.path-mod-choicegroup.dir-rtl .results.names .user .image,
-.path-mod-choicegroup.dir-rtl .results.names .user .fullname,
-.path-mod-choicegroup.dir-rtl .results.names .user .fullname{padding-left: 0px; padding-right: 5px;}
-.path-mod-choicegroup.dir-rtl .downloadreport {margin-left:0;margin-right: 25%;}
+.path-mod-groupmanagement.dir-rtl .horizontal .groupmanagements .option {padding-right:0px; padding-left: 20px; float:right;}
+.path-mod-groupmanagement.dir-rtl .results.anonymous .graph.horizontal {text-align: right;}
+.path-mod-groupmanagement.dir-rtl .results.anonymous { text-align: center; }
+.path-mod-groupmanagement.dir-rtl .results.names .cell{text-align: right;}
+.path-mod-groupmanagement.dir-rtl .results.names .user .attemptaction,
+.path-mod-groupmanagement.dir-rtl .results.names .user .image,
+.path-mod-groupmanagement.dir-rtl .results.names .user .fullname,
+.path-mod-groupmanagement.dir-rtl .results.names .user .fullname{padding-left: 0px; padding-right: 5px;}
+.path-mod-groupmanagement.dir-rtl .downloadreport {margin-left:0;margin-right: 25%;}
 
 #page-mod-choice-report.dir-rtl .downloadreport ul li{float:right;}
 #page-mod-choice-view.dir-rtl .reportlink {text-align: left;}
 
-.path-mod-choicegroup table { border: 1px #666 solid; }
-.path-mod-choicegroup td { border-top: 1px #666 solid; }
-.path-mod-choicegroup th, .path-mod-choicegroup td { padding:10px 15px; }
-.path-mod-choicegroup td.center { text-align:center; }
+.path-mod-groupmanagement table { border: 1px #666 solid; }
+.path-mod-groupmanagement td { border-top: 1px #666 solid; }
+.path-mod-groupmanagement th, .path-mod-groupmanagement td { padding:10px 15px; }
+.path-mod-groupmanagement td.center { text-align:center; }
 
-.path-mod-choicegroup div.choicegroup-memberdisplay {
+.path-mod-groupmanagement div.groupmanagement-memberdisplay {
     width:12px;
     height:12px;
     line-height:12px;
@@ -74,31 +74,31 @@
     margin:0px auto;
 }
 
-.path-mod-choicegroup table.results .header {
+.path-mod-groupmanagement table.results .header {
     color:#000;
 }
 
-.path-mod-choicegroup table.choicegroups {
+.path-mod-groupmanagement table.groupmanagements {
     margin: 20px 0;
 }
 
-.path-mod-choicegroup a.choicegroup-memberdisplay,
-.path-mod-choicegroup a.choicegroup-descriptiondisplay {
+.path-mod-groupmanagement a.groupmanagement-memberdisplay,
+.path-mod-groupmanagement a.groupmanagement-descriptiondisplay {
     display: block;
 }
 
-.path-mod-choicegroup div.choicegroups-membersnames.hidden,
-.path-mod-choicegroup div.choicegroups-descriptions.hidden,
-.path-mod-choicegroup a.choicegroup-memberdisplay.hidden,
-.path-mod-choicegroup a.choicegroup-descriptiondisplay.hidden {
+.path-mod-groupmanagement div.groupmanagements-membersnames.hidden,
+.path-mod-groupmanagement div.groupmanagements-descriptions.hidden,
+.path-mod-groupmanagement a.groupmanagement-memberdisplay.hidden,
+.path-mod-groupmanagement a.groupmanagement-descriptiondisplay.hidden {
     display:none;
 }
 
-.path-mod-choicegroup .results td {
+.path-mod-groupmanagement .results td {
     min-width: 120px;
 }
 
-.path-mod-choicegroup .choicegroups-descriptions {
+.path-mod-groupmanagement .groupmanagements-descriptions {
     border-top: 1px #ccc dotted;
     margin-top: 5px;
     padding-top: 5px;

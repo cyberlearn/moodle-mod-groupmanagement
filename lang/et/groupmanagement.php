@@ -16,9 +16,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'choicegroup', language 'et', branch 'MOODLE_20_STABLE'
+ * Strings for component 'groupmanagement', language 'et', branch 'MOODLE_20_STABLE'
  *
- * @package   choicegroup
+ * @package   groupmanagement
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -35,23 +35,23 @@ $string['fillinatleastoneoption'] = 'Sa pead pakkuma välja vähemalt kaks võim
 $string['full'] = '(Täis)';
 $string['havetologin'] = 'Oma valiku esitamiseks pead sa sisse logima';
 $string['choice'] = 'Valik';
-$string['choicegroupclose'] = 'Kuni';
-$string['choicegroup:deleteresponses'] = 'Kustuta kõik vastused';
-$string['choicegroup:downloadresponses'] = 'Lae vastused alla';
-$string['choicegroupfull'] = 'Käesoleva rühma kohtade arv on täis';
-$string['choicegroup:choose'] = 'Salvesta valik';
-$string['choicegroupname'] = 'Rühma valimise nimi';
-$string['choicegroupopen'] = 'Avatud';
-$string['choicegroupoptions'] = 'Valiku sätted';
-$string['choicegroupoptions_help'] = 'Siin märgid Sa ära valikud, mille vahel osalejad valiku tegema peavad.
+$string['groupmanagementclose'] = 'Kuni';
+$string['groupmanagement:deleteresponses'] = 'Kustuta kõik vastused';
+$string['groupmanagement:downloadresponses'] = 'Lae vastused alla';
+$string['groupmanagementfull'] = 'Käesoleva rühma kohtade arv on täis';
+$string['groupmanagement:choose'] = 'Salvesta valik';
+$string['groupmanagementname'] = 'Rühma valimise nimi';
+$string['groupmanagementopen'] = 'Avatud';
+$string['groupmanagementoptions'] = 'Valiku sätted';
+$string['groupmanagementoptions_help'] = 'Siin märgid Sa ära valikud, mille vahel osalejad valiku tegema peavad.
 
 Võid kasutada just soovitud hulka valikuid. Täitmata jäetud valikuid õppijatele ei näidata. Kui vajad veel rohkem valikuid, siis klõpsa nupul "Lisa vormi veel 3 välja".';
 $string['limitanswers_help'] = 'See valik võimaldab piirata osalejate arvu, kes saavad välja pakutud valikuga liituda. Kui piirarv täis saab, siis ei saa keegi teine seda valikut enam teha.
 
 Kui piirarvud ei ole sisse lülitatud, siis saab iga rühmaga liituda piiramatu arv liikmeid.';
-$string['choicegroup:addinstance'] = 'Lisa uus rühma valimise tegevus';
-$string['choicegroup:readresponses'] = 'Loe vastuseid';
-$string['choicegroupsaved'] = 'Sinu rühma valik on salvestatud';
+$string['groupmanagement:addinstance'] = 'Lisa uus rühma valimise tegevus';
+$string['groupmanagement:readresponses'] = 'Loe vastuseid';
+$string['groupmanagementsaved'] = 'Sinu rühma valik on salvestatud';
 $string['choicetext'] = 'Rühma valiku tekst';
 $string['chooseaction'] = 'Vali tegevus...';
 $string['choosegroup'] = 'Vali rühm';
@@ -80,11 +80,11 @@ $string['publishalways'] = 'Näita alati tulemusi õppijatele';
 $string['publishanonymous'] = 'Avalda anonüümsed tulemused ja ära näita õppijate nimesid';
 $string['publishnames'] = 'Avalda täielikud tulemused koos õppijate nimede ja nende valikutega';
 $string['publishnot'] = 'Ära avalda tulemusi õppijatele';
-$string['removemychoicegroup'] = 'Eemalda minu valik';
+$string['removemygroupmanagement'] = 'Eemalda minu valik';
 $string['removeresponses'] = 'Eemalda kõik vastused';
 $string['responses'] = 'Vastused';
 $string['responsesto'] = 'Vastused valikule {$a}';
-$string['savemychoicegroup'] = 'Salvesta minu valik';
+$string['savemygroupmanagement'] = 'Salvesta minu valik';
 $string['showunanswered'] = 'Näita eraldi veergu vastamata kasutajatega';
 $string['spaceleft'] = 'koht on vaba';
 $string['spacesleft'] = 'kohta on vaba';

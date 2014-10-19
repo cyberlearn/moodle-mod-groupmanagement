@@ -18,7 +18,7 @@
  * Version information
  *
  * @package    mod
- * @subpackage choicegroup
+ * @subpackage groupmanagement
  * @copyright  2013 Université de Lausanne
  * @author     Nicolas Dunand <Nicolas.Dunand@unil.ch>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -31,6 +31,6 @@ $plugin->requires  = 2014050800; // Moodle 2.7
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->release = '1.7 (Build: 2014091700)';
 
-$plugin->component = 'mod_choicegroup';
+$plugin->component = 'mod_groupmanagement';
 $plugin->cron = 0;
 

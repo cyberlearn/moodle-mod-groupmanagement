@@ -23,18 +23,18 @@
  */
 
 /**
- * Define all the backup steps that will be used by the backup_choicegroup_activity_task
+ * Define all the backup steps that will be used by the backup_groupmanagement_activity_task
  */
 
 /**
- * Define the complete choicegroup structure for backup, with file and id annotations
+ * Define the complete groupmanagement structure for backup, with file and id annotations
  */
-class backup_choicegroup_activity_structure_step extends backup_activity_structure_step {
+class backup_groupmanagement_activity_structure_step extends backup_activity_structure_step {
 
     protected function define_structure() {
 
         // Define each element separated
-        $choicegroup = new backup_nested_element('choicegroup', array('id'), array(
+        $groupmanagement = new backup_nested_element('groupmanagement', array('id'), array(
             'name', 'intro', 'introformat', 'publish',
             'showresults', 'display', 'allowupdate', 'allowunanswered',
             'limitanswers', 'timeopen', 'timeclose', 'timemodified',
@@ -46,22 +46,22 @@ class backup_choicegroup_activity_structure_step extends backup_activity_structu
             'groupid', 'maxanswers', 'timemodified'));
 
         // Build the tree
-        $choicegroup->add_child($options);
+        $groupmanagement->add_child($options);
         $options->add_child($option);
 
         // Define sources
-        $choicegroup->set_source_table('choicegroup', array('id' => backup::VAR_ACTIVITYID));
+        $groupmanagement->set_source_table('groupmanagement', array('id' => backup::VAR_ACTIVITYID));
 
         $option->set_source_sql('
             SELECT *
-              FROM {choicegroup_options}
-             WHERE choicegroupid = ?',
+              FROM {groupmanagement_options}
+             WHERE groupmanagementid = ?',
             array(backup::VAR_PARENTID));
 
         // Define file annotations
-        $choicegroup->annotate_files('mod_choicegroup', 'intro', null); // This file area hasn't itemid
+        $groupmanagement->annotate_files('mod_groupmanagement', 'intro', null); // This file area hasn't itemid
 
-        // Return the root element (choicegroup), wrapped into standard activity structure
-        return $this->prepare_activity_structure($choicegroup);
+        // Return the root element (groupmanagement), wrapped into standard activity structure
+        return $this->prepare_activity_structure($groupmanagement);
     }
 }

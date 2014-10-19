@@ -22,14 +22,14 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once($CFG->dirroot . '/mod/choicegroup/backup/moodle2/backup_choicegroup_stepslib.php'); // Because it exists (must)
-require_once($CFG->dirroot . '/mod/choicegroup/backup/moodle2/backup_choicegroup_settingslib.php'); // Because it exists (optional)
+require_once($CFG->dirroot . '/mod/groupmanagement/backup/moodle2/backup_groupmanagement_stepslib.php'); // Because it exists (must)
+require_once($CFG->dirroot . '/mod/groupmanagement/backup/moodle2/backup_groupmanagement_settingslib.php'); // Because it exists (optional)
 
 /**
- * choicegroup backup task that provides all the settings and steps to perform one
+ * groupmanagement backup task that provides all the settings and steps to perform one
  * complete backup of the activity
  */
-class backup_choicegroup_activity_task extends backup_activity_task {
+class backup_groupmanagement_activity_task extends backup_activity_task {
 
     /**
      * Define (add) particular settings this activity can have
@@ -43,7 +43,7 @@ class backup_choicegroup_activity_task extends backup_activity_task {
      */
     protected function define_my_steps() {
         // Choice only has one structure step
-        $this->add_step(new backup_choicegroup_activity_structure_step('choicegroup_structure', 'choicegroup.xml'));
+        $this->add_step(new backup_groupmanagement_activity_structure_step('groupmanagement_structure', 'groupmanagement.xml'));
     }
 
     /**
@@ -55,13 +55,13 @@ class backup_choicegroup_activity_task extends backup_activity_task {
 
         $base = preg_quote($CFG->wwwroot,"/");
 
-        // Link to the list of choicegroups
-        $search="/(".$base."\/mod\/choicegroup\/index.php\?id\=)([0-9]+)/";
-        $content= preg_replace($search, '$@CHOICEGROUPINDEX*$2@$', $content);
+        // Link to the list of groupmanagements
+        $search="/(".$base."\/mod\/groupmanagement\/index.php\?id\=)([0-9]+)/";
+        $content= preg_replace($search, '$@GROUPMANAGEMENTINDEX*$2@$', $content);
 
-        // Link to choicegroup view by moduleid
-        $search="/(".$base."\/mod\/choicegroup\/view.php\?id\=)([0-9]+)/";
-        $content= preg_replace($search, '$@CHOICEGROUPVIEWBYID*$2@$', $content);
+        // Link to groupmanagement view by moduleid
+        $search="/(".$base."\/mod\/groupmanagement\/view.php\?id\=)([0-9]+)/";
+        $content= preg_replace($search, '$@GROUPMANAGEMENTVIEWBYID*$2@$', $content);
 
         return $content;
     }

@@ -6,7 +6,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-YUI.add('moodle-mod_choicegroup-form', function(Y) {
+YUI.add('moodle-mod_groupmanagement-form', function(Y) {
 	var CSS = {
 	},
 	SELECTORS = {
@@ -27,18 +27,18 @@ YUI.add('moodle-mod_choicegroup-form', function(Y) {
 			GLOBAL_LIMIT_INPUT: '#id_generallimitation',
 			HIDDEN_LIMIT_INPUTS: 'input.limit_input_node',
 	};
-	Y.namespace('Moodle.mod_choicegroup.form');
-	Y.Moodle.mod_choicegroup.form = {
+	Y.namespace('Moodle.mod_groupmanagement.form');
+	Y.Moodle.mod_groupmanagement.form = {
 			init: function() {
 
 				// -------------------------------
 				// Global Variables
 				// -------------------------------
 
-                var CHAR_LIMITUI_PAR_LEFT = M.util.get_string('char_limitui_parenthesis_start', 'choicegroup');
-                var CHAR_LIMITUI_PAR_RIGHT = M.util.get_string('char_limitui_parenthesis_end', 'choicegroup');
-                var CHAR_SELECT_BULLET_COLLAPSED = M.util.get_string('char_bullet_collapsed', 'choicegroup');
-                var CHAR_SELECT_BULLET_EXPANDED = M.util.get_string('char_bullet_expanded', 'choicegroup');
+                var CHAR_LIMITUI_PAR_LEFT = M.util.get_string('char_limitui_parenthesis_start', 'groupmanagement');
+                var CHAR_LIMITUI_PAR_RIGHT = M.util.get_string('char_limitui_parenthesis_end', 'groupmanagement');
+                var CHAR_SELECT_BULLET_COLLAPSED = M.util.get_string('char_bullet_collapsed', 'groupmanagement');
+                var CHAR_SELECT_BULLET_EXPANDED = M.util.get_string('char_bullet_expanded', 'groupmanagement');
 
 
 				var availableGroupsNode = Y.one(SELECTORS.AVAILABLE_GRPS_SELECT);
@@ -293,7 +293,7 @@ YUI.add('moodle-mod_choicegroup-form', function(Y) {
 						var limitInputNodes = Y.all(SELECTORS.HIDDEN_LIMIT_INPUTS);
 						limitInputNodes.each(function(n) { n.set('value', generalLimitValue); });
 					} else {
-						alert(M.util.get_string('the_value_you_entered_is_not_a_number', 'choicegroup'));
+						alert(M.util.get_string('the_value_you_entered_is_not_a_number', 'groupmanagement'));
 					}
                     updateLimitUIOfAllSelectedGroups();
 				});
@@ -304,7 +304,7 @@ YUI.add('moodle-mod_choicegroup-form', function(Y) {
 				formNode.on('submit', function(e) {
 					var selectedOptionsNodes = Y.all(SELECTORS.SELECTED_GRPS_SELECT + " option");
 					if (selectedOptionsNodes.size() < 2) {
-						alert(M.util.get_string('pleasesetgroups', 'choicegroup'));
+						alert(M.util.get_string('pleasesetgroups', 'groupmanagement'));
 				        e.preventDefault();
 				        e.stopPropagation();
 					}
@@ -325,28 +325,28 @@ YUI.add('moodle-mod_choicegroup-form', function(Y) {
 							}
 						});
 						if (allGroupings) {
-							addGroupButtonNode.setContent(M.util.get_string('add_groupings', 'choicegroup'));
+							addGroupButtonNode.setContent(M.util.get_string('add_groupings', 'groupmanagement'));
 						} else {
-							addGroupButtonNode.setContent(M.util.get_string('add_groups', 'choicegroup'));
+							addGroupButtonNode.setContent(M.util.get_string('add_groups', 'groupmanagement'));
 						}
 						addGroupButtonNode.set('disabled', false);
 
 					} else if (selectedOptionsNodes.size() >= 1) {
 						var firstNode = selectedOptionsNodes.item(0);
 						if (firstNode.hasClass('grouping')) {
-							addGroupButtonNode.setContent(M.util.get_string('add_grouping', 'choicegroup'));
+							addGroupButtonNode.setContent(M.util.get_string('add_grouping', 'groupmanagement'));
 							if (wasFirstCharacterClicked(e, firstNode)) {
 								expandOrCollapseGrouping(firstNode);
 							}
 
 						} else {
-							addGroupButtonNode.setContent(M.util.get_string('add_group', 'choicegroup'));
+							addGroupButtonNode.setContent(M.util.get_string('add_group', 'groupmanagement'));
 						}
 						addGroupButtonNode.set('disabled', false);
 
 					} else {
 						addGroupButtonNode.set('disabled', true);
-						addGroupButtonNode.setContent(M.util.get_string('add', 'choicegroup'));
+						addGroupButtonNode.setContent(M.util.get_string('add', 'groupmanagement'));
 					}
 
 				});
@@ -364,18 +364,18 @@ YUI.add('moodle-mod_choicegroup-form', function(Y) {
 				selectedGroupsNode.on('click', function(e) {
 					var selectedOptionsNodes = Y.all(SELECTORS.SELECTED_GRPS_SELECT + " option:checked");
 					if (selectedOptionsNodes.size() >= 2) {
-						removeGroupButtonNode.setContent(M.util.get_string('del_groups', 'choicegroup'));
+						removeGroupButtonNode.setContent(M.util.get_string('del_groups', 'groupmanagement'));
 						removeGroupButtonNode.set('disabled', false);
 						uiInputLimitNode.set('disabled', true);
 						//uiInputLimitNode.set('value', 'multiple values');
 						limitInputUIDIVNode.hide();
 
 					} else if (selectedOptionsNodes.size() >= 1) {
-						removeGroupButtonNode.setContent(M.util.get_string('del_group', 'choicegroup'));
+						removeGroupButtonNode.setContent(M.util.get_string('del_group', 'groupmanagement'));
 						removeGroupButtonNode.set('disabled', false);
 						uiInputLimitNode.set('disabled', false);
 						uiInputLimitNode.set('value', getInputLimitNodeOfSelectedGroupNode(selectedOptionsNodes.item(0)).get('value'));
-						Y.one(SELECTORS.LIMIT_UI_LABEL).set('text', M.util.get_string('set_limit_for_group', 'choicegroup') + getGroupNameWithoutLimitText(selectedOptionsNodes.item(0)) + ":");
+						Y.one(SELECTORS.LIMIT_UI_LABEL).set('text', M.util.get_string('set_limit_for_group', 'groupmanagement') + getGroupNameWithoutLimitText(selectedOptionsNodes.item(0)) + ":");
 						if (limitAnswersSelectNode.get('value') == '1') { // limiting is enabled, show limit box
 							limitInputUIDIVNode.show();
 						}
@@ -383,7 +383,7 @@ YUI.add('moodle-mod_choicegroup-form', function(Y) {
 
 					} else {
 						removeGroupButtonNode.set('disabled', true);
-						removeGroupButtonNode.setContent(M.util.get_string('del', 'choicegroup'));
+						removeGroupButtonNode.setContent(M.util.get_string('del', 'groupmanagement'));
 						uiInputLimitNode.set('disabled', true);
 						limitInputUIDIVNode.hide();
 					}

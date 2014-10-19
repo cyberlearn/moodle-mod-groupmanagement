@@ -18,7 +18,7 @@
  * Version information
  *
  * @package    mod
- * @subpackage choicegroup
+ * @subpackage groupmanagement
  * @copyright  2013 Université de Lausanne
  * @author     Nicolas Dunand <Nicolas.Dunand@unil.ch>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -30,7 +30,7 @@ require_once("lib.php");
 
 $id = required_param('id',PARAM_INT);   // course
 
-$PAGE->set_url('/mod/choicegroup/index.php', array('id'=>$id));
+$PAGE->set_url('/mod/groupmanagement/index.php', array('id'=>$id));
 
 if (!$course = $DB->get_record('course', array('id'=>$id))) {
     print_error('invalidcourseid');
@@ -42,20 +42,20 @@ $PAGE->set_pagelayout('incourse');
 $params = array(
     'context' => context_course::instance($course->id)
 );
-$event = \mod_choicegroup\event\course_module_instance_list_viewed::create($params);
+$event = \mod_groupmanagement\event\course_module_instance_list_viewed::create($params);
 $event->add_record_snapshot('course', $course);
 $event->trigger();
 
-$strchoicegroup = get_string("modulename", "choicegroup");
-$strchoicegroups = get_string("modulenameplural", "choicegroup");
+$strgroupmanagement = get_string("modulename", "groupmanagement");
+$strgroupmanagements = get_string("modulenameplural", "groupmanagement");
 $strsectionname  = get_string('sectionname', 'format_'.$course->format);
-$PAGE->set_title($strchoicegroups);
+$PAGE->set_title($strgroupmanagements);
 $PAGE->set_heading($course->fullname);
-$PAGE->navbar->add($strchoicegroups);
+$PAGE->navbar->add($strgroupmanagements);
 echo $OUTPUT->header();
 
-if (! $choicegroups = get_all_instances_in_course("choicegroup", $course)) {
-    notice(get_string('thereareno', 'moodle', $strchoicegroups), "../../course/view.php?id=$course->id");
+if (! $groupmanagements = get_all_instances_in_course("groupmanagement", $course)) {
+    notice(get_string('thereareno', 'moodle', $strgroupmanagements), "../../course/view.php?id=$course->id");
 }
 
 $usesections = course_format_uses_sections($course->format);
@@ -76,9 +76,9 @@ if ($usesections) {
 
 $currentsection = "";
 
-foreach ($choicegroups as $choicegroup) {
-    $choicegroup_groups = choicegroup_get_groups($choicegroup);
-    $answer = choicegroup_get_user_answer($choicegroup, $USER->id);
+foreach ($groupmanagements as $groupmanagement) {
+    $groupmanagement_groups = groupmanagement_get_groups($groupmanagement);
+    $answer = groupmanagement_get_user_answer($groupmanagement, $USER->id);
     if (!empty($answer->id)) {
         $aa = $answer->name;
     } else {
@@ -86,24 +86,24 @@ foreach ($choicegroups as $choicegroup) {
     }
     if ($usesections) {
         $printsection = "";
-        if ($choicegroup->section !== $currentsection) {
-            if ($choicegroup->section) {
-                $printsection = get_section_name($course, $sections[$choicegroup->section]);
+        if ($groupmanagement->section !== $currentsection) {
+            if ($groupmanagement->section) {
+                $printsection = get_section_name($course, $sections[$groupmanagement->section]);
             }
             if ($currentsection !== "") {
                 $table->data[] = 'hr';
             }
-            $currentsection = $choicegroup->section;
+            $currentsection = $groupmanagement->section;
         }
     }
 
     //Calculate the href
-    if (!$choicegroup->visible) {
+    if (!$groupmanagement->visible) {
         //Show dimmed if the mod is hidden
-        $tt_href = "<a class=\"dimmed\" href=\"view.php?id=$choicegroup->coursemodule\">".format_string($choicegroup->name,true)."</a>";
+        $tt_href = "<a class=\"dimmed\" href=\"view.php?id=$groupmanagement->coursemodule\">".format_string($groupmanagement->name,true)."</a>";
     } else {
         //Show normal if the mod is visible
-        $tt_href = "<a href=\"view.php?id=$choicegroup->coursemodule\">".format_string($choicegroup->name,true)."</a>";
+        $tt_href = "<a href=\"view.php?id=$groupmanagement->coursemodule\">".format_string($groupmanagement->name,true)."</a>";
     }
     if ($usesections) {
         $table->data[] = array ($printsection, $tt_href, $aa);

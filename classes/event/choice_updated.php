@@ -15,29 +15,29 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The mod_choicegroup post created event.
+ * The mod_groupmanagement post created event.
  *
- * @package    mod_choicegroup
+ * @package    mod_groupmanagement
  * @copyright  2014 Dan Poltawski <dan@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_choicegroup\event;
+namespace mod_groupmanagement\event;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * The mod_choicegroup post created event class.
+ * The mod_groupmanagement post created event class.
  *
  * @property-read array $other {
  *      Extra information about the event.
  *
  *      - int discussionid: The discussion id the post is part of.
- *      - int choicegroupid: The choicegroup id the post is part of.
- *      - string choicegrouptype: The type of choicegroup the post is part of.
+ *      - int groupmanagementid: The groupmanagement id the post is part of.
+ *      - string groupmanagementtype: The type of groupmanagement the post is part of.
  * }
  *
- * @package    mod_choicegroup
+ * @package    mod_groupmanagement
  * @since      Moodle 2.7
  * @copyright  2014 Dan Poltawski <dan@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -63,7 +63,7 @@ class choice_updated extends \core\event\base {
         $a = new \stdClass();
         $a->userid = $this->userid;
         $a->contextinstanceid = $this->contextinstanceid;
-        return get_string('event:answered_desc', 'mod_choicegroup', $a);
+        return get_string('event:answered_desc', 'mod_groupmanagement', $a);
     }
 
     /**
@@ -72,7 +72,7 @@ class choice_updated extends \core\event\base {
      * @return string
      */
     public static function get_name() {
-        return get_string('event:answered', 'mod_choicegroup');
+        return get_string('event:answered', 'mod_groupmanagement');
     }
 
     /**
@@ -81,7 +81,7 @@ class choice_updated extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/mod/choicegroup/view.php', array('id' => $this->contextinstanceid));
+        return new \moodle_url('/mod/groupmanagement/view.php', array('id' => $this->contextinstanceid));
     }
 
     /**
@@ -90,10 +90,10 @@ class choice_updated extends \core\event\base {
      * @return array|null
      */
     protected function get_legacy_logdata() {
-        // The legacy log table expects a relative path to /mod/choicegroup/.
-        $logurl = substr($this->get_url()->out_as_local_url(), strlen('/mod/choicegroup/'));
+        // The legacy log table expects a relative path to /mod/groupmanagement/.
+        $logurl = substr($this->get_url()->out_as_local_url(), strlen('/mod/groupmanagement/'));
 
-        return array($this->courseid, 'choicegroup', 'choice updated', $logurl, $this->objectid, $this->contextinstanceid);
+        return array($this->courseid, 'groupmanagement', 'choice updated', $logurl, $this->objectid, $this->contextinstanceid);
     }
 
 

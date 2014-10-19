@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/choicegroup/db" VERSION="20120425" COMMENT="XMLDB file for Moodle mod/choicegroup"
+<XMLDB PATH="mod/groupmanagement/db" VERSION="20120425" COMMENT="XMLDB file for Moodle mod/groupmanagement"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="choicegroup" COMMENT="Available choicegroups are stored here" NEXT="choicegroup_options">
+    <TABLE NAME="groupmanagement" COMMENT="Available groupmanagements are stored here" NEXT="groupmanagement_options">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="course"/>
         <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="name"/>
@@ -21,7 +21,7 @@
         <FIELD NAME="timeopen" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="limitanswers" NEXT="timeclose"/>
         <FIELD NAME="timeclose" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timeopen" NEXT="timemodified"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timeclose" NEXT="completionsubmit"/>
-        <FIELD NAME="completionsubmit" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" COMMENT="If this field is set to 1, then the activity will be automatically marked as 'complete' once the user submits their choicegroup." PREVIOUS="timemodified"/>
+        <FIELD NAME="completionsubmit" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" COMMENT="If this field is set to 1, then the activity will be automatically marked as 'complete' once the user submits their groupmanagement." PREVIOUS="timemodified"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -30,17 +30,17 @@
         <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="choicegroup_options" COMMENT="available options to choicegroup" PREVIOUS="choicegroup">
+    <TABLE NAME="groupmanagement_options" COMMENT="available options to groupmanagement" PREVIOUS="groupmanagement">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="choicegroupid"/>
-        <FIELD NAME="choicegroupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="groupid"/>
-        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="choicegroupid" NEXT="maxanswers"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="groupmanagementid"/>
+        <FIELD NAME="groupmanagementid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="id" NEXT="groupid"/>
+        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="groupmanagementid" NEXT="maxanswers"/>
         <FIELD NAME="maxanswers" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="groupid" NEXT="timemodified"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="maxanswers"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="choicegroupid"/>
-        <KEY NAME="choicegroupid" TYPE="foreign" FIELDS="choicegroupid" REFTABLE="choicegroup" REFFIELDS="id" PREVIOUS="primary"/>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="groupmanagementid"/>
+        <KEY NAME="groupmanagementid" TYPE="foreign" FIELDS="groupmanagementid" REFTABLE="groupmanagement" REFFIELDS="id" PREVIOUS="primary"/>
       </KEYS>
     </TABLE>
   </TABLES>

@@ -35,15 +35,15 @@ $string['fillinatleastoneoption'] = 'Valitse ainakin kaksi vaihtoehtoa.';
 $string['full'] = '(Täysi)';
 $string['havetologin'] = 'Sinun pitää kirjautua ennen kuin voit ottaa osaa valintaan';
 $string['choice'] = 'Vaihtoehto';
-$string['choicegroupclose'] = 'Saakka';
-$string['choicegroup:deleteresponses'] = 'Vastausten poisto';
-$string['choicegroup:downloadresponses'] = 'Vastausten lataus';
-$string['choicegroupfull'] = 'Tämä ryhmä on jo täynnä.';
-$string['choicegroup:choose'] = 'Ryhmän valitseminen';
-$string['choicegroupname'] = 'Ryhmävanlinnan nimi';
-$string['choicegroupopen'] = 'Avoinna';
-$string['choicegroupoptions'] = 'Vastausvaihtoehdot';
-$string['choicegroupoptions_help'] = '<P ALIGN=CENTER><B>Valinnan vaihtoehdot</B></P>
+$string['groupmanagementclose'] = 'Saakka';
+$string['groupmanagement:deleteresponses'] = 'Vastausten poisto';
+$string['groupmanagement:downloadresponses'] = 'Vastausten lataus';
+$string['groupmanagementfull'] = 'Tämä ryhmä on jo täynnä.';
+$string['groupmanagement:choose'] = 'Ryhmän valitseminen';
+$string['groupmanagementname'] = 'Ryhmävanlinnan nimi';
+$string['groupmanagementopen'] = 'Avoinna';
+$string['groupmanagementoptions'] = 'Vastausvaihtoehdot';
+$string['groupmanagementoptions_help'] = '<P ALIGN=CENTER><B>Valinnan vaihtoehdot</B></P>
 <p>Täällä määrittelet vaihtoehdot/ryhmät, joista kurssilaiset voivat valita vastauksensa.</p>
 
 <p>Voit täyttää näistä niin monta kuin haluat: voit myös jättää joitain kohtia tyhjäksi, jos et tarvitse kaikkia kuutta vaihtoehtoa.</p>';
@@ -59,8 +59,8 @@ $string['limitanswers_help'] = '<h2>Määrien rajoittaminen valintavaihtoehdoiss
 
 
 <p>Jos et käytä määrän rajoitusta, minkä tahansa vaihtoehdon voi valita kuinka moni osallistuja tahansa.</p>';
-$string['choicegroup:readresponses'] = 'Vastusten tarkastelu';
-$string['choicegroupsaved'] = 'Valintasi on tallennettu';
+$string['groupmanagement:readresponses'] = 'Vastusten tarkastelu';
+$string['groupmanagementsaved'] = 'Valintasi on tallennettu';
 $string['choicetext'] = 'Ryhmävalinnan teksti';
 $string['chooseaction'] = 'Valitse toiminto ...';
 $string['choosegroup'] = 'Valitse ryhmä';
@@ -91,11 +91,11 @@ $string['publishalways'] = 'Näytä tulokset aina opiskelijalle';
 $string['publishanonymous'] = 'Julkaise tulokset nimettömästi, piilota vastaajien nimet';
 $string['publishnames'] = 'Julkaise tulokset, näytä nimet ja vastaukset.';
 $string['publishnot'] = 'Älä julkaise tuloksia';
-$string['removemychoicegroup'] = 'Poista ryhmävalintani';
+$string['removemygroupmanagement'] = 'Poista ryhmävalintani';
 $string['removeresponses'] = 'Poista kaikki vastaukset';
 $string['responses'] = 'Vastaukset';
 $string['responsesto'] = 'Vastaukset {$a}';
-$string['savemychoicegroup'] = 'Tallenna ryhmävalintani';
+$string['savemygroupmanagement'] = 'Tallenna ryhmävalintani';
 $string['showunanswered'] = 'Näytä sarake vastaamattomille';
 $string['spaceleft'] = 'paikka vapaana';
 $string['spacesleft'] = 'paikkaa vapaana';

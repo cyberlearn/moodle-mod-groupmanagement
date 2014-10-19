@@ -17,7 +17,7 @@
  * Version information
  *
  * @package    mod
- * @subpackage choicegroup
+ * @subpackage groupmanagement
  * @copyright  2013 Université de Lausanne
  * @author     Nicolas Dunand <Nicolas.Dunand@unil.ch>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -25,23 +25,10 @@
 
 
 var NDY = YUI().use("node", function(Y) {
-    var choicegroup_memberdisplay_click = function(e) {
+    var groupmanagement_memberdisplay_click = function(e) {
 
-        var names = Y.all('div.choicegroups-membersnames'),
-            btnShowHide = Y.all('a.choicegroup-memberdisplay');
-
-        btnShowHide.toggleClass('hidden');
-        names.toggleClass('hidden');
-
-        e.preventDefault();
-
-    };
-    Y.on("click", choicegroup_memberdisplay_click, "a.choicegroup-memberdisplay");
-
-    var choicegroup_descriptiondisplay_click = function(e) {
-
-        var names = Y.all('div.choicegroups-descriptions'),
-            btnShowHide = Y.all('a.choicegroup-descriptiondisplay');
+        var names = Y.all('div.groupmanagements-membersnames'),
+            btnShowHide = Y.all('a.groupmanagement-memberdisplay');
 
         btnShowHide.toggleClass('hidden');
         names.toggleClass('hidden');
@@ -49,7 +36,20 @@ var NDY = YUI().use("node", function(Y) {
         e.preventDefault();
 
     };
-    Y.on("click", choicegroup_descriptiondisplay_click, "a.choicegroup-descriptiondisplay");
-    Y.delegate('click', function() { Y.one("table.choicegroups~input[type='submit'][class='button']").hide(); },  Y.config.doc, "table.choicegroups input[id^='choiceid_'][type='radio'][checked]", this);
-    Y.delegate('click', function() { Y.one("table.choicegroups~input[type='submit'][class='button']").show(); },  Y.config.doc, "table.choicegroups input[id^='choiceid_'][type='radio']:not([checked])", this);
+    Y.on("click", groupmanagement_memberdisplay_click, "a.groupmanagement-memberdisplay");
+
+    var groupmanagement_descriptiondisplay_click = function(e) {
+
+        var names = Y.all('div.groupmanagements-descriptions'),
+            btnShowHide = Y.all('a.groupmanagement-descriptiondisplay');
+
+        btnShowHide.toggleClass('hidden');
+        names.toggleClass('hidden');
+
+        e.preventDefault();
+
+    };
+    Y.on("click", groupmanagement_descriptiondisplay_click, "a.groupmanagement-descriptiondisplay");
+    Y.delegate('click', function() { Y.one("table.groupmanagements~input[type='submit'][class='button']").hide(); },  Y.config.doc, "table.groupmanagements input[id^='choiceid_'][type='radio'][checked]", this);
+    Y.delegate('click', function() { Y.one("table.groupmanagements~input[type='submit'][class='button']").show(); },  Y.config.doc, "table.groupmanagements input[id^='choiceid_'][type='radio']:not([checked])", this);
 });

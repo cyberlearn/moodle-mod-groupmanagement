@@ -1,6 +1,6 @@
 <?php
 //
-// Capability definitions for the choicegroup module.
+// Capability definitions for the groupmanagement module.
 //
 // The capabilities are loaded into the database table when the module is
 // installed or updated. Whenever the capability definitions are updated,
@@ -30,7 +30,7 @@
 
 $capabilities = array(
 
-    'mod/choicegroup:choose' => array(
+    'mod/groupmanagement:choose' => array(
 
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
@@ -41,7 +41,7 @@ $capabilities = array(
         )
     ),
 
-    'mod/choicegroup:addinstance' => array(
+    'mod/groupmanagement:addinstance' => array(
 
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
@@ -53,7 +53,7 @@ $capabilities = array(
     ),
 
 
-    'mod/choicegroup:readresponses' => array(
+    'mod/groupmanagement:readresponses' => array(
 
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
@@ -64,7 +64,7 @@ $capabilities = array(
         )
     ),
 
-    'mod/choicegroup:deleteresponses' => array(
+    'mod/groupmanagement:deleteresponses' => array(
 
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
@@ -75,7 +75,7 @@ $capabilities = array(
         )
     ),
 
-    'mod/choicegroup:downloadresponses' => array(
+    'mod/groupmanagement:downloadresponses' => array(
 
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
