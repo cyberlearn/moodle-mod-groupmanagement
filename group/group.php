@@ -23,11 +23,13 @@
  * @package   core_group
  */
 
-require_once('../config.php');
-require_once('lib.php');
-require_once('group_form.php');
+require_once('../../../config.php');
+require_once('../lib.php');
+require_once('./group_form.php');
 
 /// get url variables
+$cgid     = required_param('cgid', PARAM_INT);
+$cmid     = required_param('cmid', PARAM_INT);
 $courseid = optional_param('courseid', 0, PARAM_INT);
 $id       = optional_param('id', 0, PARAM_INT);
 $delete   = optional_param('delete', 0, PARAM_BOOL);
@@ -36,10 +38,9 @@ $confirm  = optional_param('confirm', 0, PARAM_BOOL);
 // This script used to support group delete, but that has been moved. In case
 // anyone still links to it, let's redirect to the new script.
 if ($delete) {
-    debugging('Deleting a group through group/group.php is deprecated and will be removed soon. Please use group/delete.php instead');
+    debugging('Deleting a group through group/group.php is deprecated and will be removed soon. Please use group/require_capability instead');
     redirect(new moodle_url('delete.php', array('courseid' => $courseid, 'groups' => $id)));
 }
-
 
 if ($id) {
     if (!$group = $DB->get_record('groups', array('id'=>$id))) {
@@ -65,22 +66,22 @@ if ($id) {
 }
 
 if ($id !== 0) {
-    $PAGE->set_url('/group/group.php', array('id'=>$id));
+    $PAGE->set_url('/mod/groupmanagement/group/group.php', array('id'=>$id, 'cmid'=>$cmid, 'cgid'=>$cgid));
 } else {
-    $PAGE->set_url('/group/group.php', array('courseid'=>$courseid));
+    $PAGE->set_url('/mod/groupmanagement/group/group.php', array('courseid'=>$courseid, 'cmid'=>$cmid, 'cgid'=>$cgid));
 }
 
 require_login($course);
 $context = context_course::instance($course->id);
-require_capability('moodle/course:managegroups', $context);
+//require_capability('moodle/course:managegroups', $context);
 
 $strgroups = get_string('groups');
 $PAGE->set_title($strgroups);
 $PAGE->set_heading($course->fullname . ': '.$strgroups);
 $PAGE->set_pagelayout('admin');
-navigation_node::override_active_url(new moodle_url('/group/index.php', array('id' => $course->id)));
+navigation_node::override_active_url(new moodle_url('/mod/groupmanagement/group/group.php', array('id'=>$course->id, 'cmid'=>$cmid, 'cgid'=>$cgid)));
 
-$returnurl = $CFG->wwwroot.'/group/index.php?id='.$course->id.'&group='.$id;
+$returnurl = $CFG->wwwroot.'/mod/groupmanagement/view.php?id='.$cmid;
 
 // Prepare the description editor: We do support files for group descriptions
 $editoroptions = array('maxfiles'=>EDITOR_UNLIMITED_FILES, 'maxbytes'=>$course->maxbytes, 'trust'=>false, 'context'=>$context, 'noclean'=>true);
@@ -90,6 +91,15 @@ if (!empty($group->id)) {
 } else {
     $editoroptions['subdirs'] = false;
     $group = file_prepare_standard_editor($group, 'description', $editoroptions, $context, 'group', 'description', null);
+}
+
+if (isset($id) && $option = $DB->get_record("groupmanagement_options", array("groupid" => $id))) {
+    if (!empty($option->groupvideo)) {
+        $group->groupvideo = 'https://www.youtube.com/watch?v='.$option->groupvideo;
+    } else {
+        $group->groupvideo = null;
+    }
+    $group->enrollementkey = $option->enrollementkey;
 }
 
 /// First create the form
@@ -107,9 +117,54 @@ if ($editform->is_cancelled()) {
 
     if ($data->id) {
         groups_update_group($data, $editform, $editoroptions);
+        $option = $DB->get_record("groupmanagement_options", array("groupid" => $data->id));
+        $option->timemodified = time();
+        $option->groupvideo = null;
+        if (isset($data->groupvideo) && !empty($data->groupvideo)) {
+            $url = $data->groupvideo;
+            parse_str(parse_url($url, PHP_URL_QUERY), $params);
+
+            if (isset($params['v']) && !empty($params['v'])) {
+                $option->groupvideo = $params['v'];
+            }
+        }
+
+        $option->enrollementkey = null;
+        if (isset($data->enrollementkey) && !empty($data->enrollementkey)) {
+            $option->enrollementkey = $data->enrollementkey;
+        }
+
+        $DB->update_record("groupmanagement_options", $option);
     } else {
         $id = groups_create_group($data, $editform, $editoroptions);
-        $returnurl = $CFG->wwwroot.'/group/index.php?id='.$course->id.'&group='.$id;
+
+        // Update the Group Choice database
+        $option = new stdClass();
+        $option->groupmanagementid = $cgid;
+        $option->groupid = $id;
+        $option->timemodified = time();
+        $option->creatorid = $USER->id;
+
+        if ($groupmanagement = $DB->get_record("groupmanagement", array("id" => $cgid))) {
+            if (isset($groupmanagement->maxusersingroups)) {
+                $option->maxusersingroups = $groupmanagement->maxusersingroups;
+            }
+        }
+
+        if (isset($data->groupvideo) && !empty($data->groupvideo)) {
+            $url = $data->groupvideo;
+            parse_str(parse_url($url, PHP_URL_QUERY), $params);
+
+            if (isset($params['v']) && !empty($params['v'])) {
+                $option->groupvideo = $params['v'];
+            }
+        }
+
+        if (isset($data->enrollementkey) && !empty($data->enrollementkey)) {
+            $option->enrollementkey = $data->enrollementkey;
+        }
+
+        $DB->insert_record("groupmanagement_options", $option);
     }
 
     redirect($returnurl);

@@ -23,15 +23,16 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once('../config.php');
-require_once('lib.php');
+require_once('../../../config.php');
+require_once('../lib.php');
 
 // Get and check parameters
 $courseid = required_param('courseid', PARAM_INT);
 $groupids = required_param('groups', PARAM_SEQUENCE);
-$confirm = optional_param('confirm', 0, PARAM_BOOL);
+$cmid     = required_param('cmid', PARAM_INT);
+$confirm  = optional_param('confirm', 0, PARAM_BOOL);
 
-$PAGE->set_url('/group/delete.php', array('courseid'=>$courseid,'groups'=>$groupids));
+$PAGE->set_url('/mod/groupmanagement/group/delete.php', array('courseid'=>$courseid,'groups'=>$groupids, 'cmid'=>$cmid));
 $PAGE->set_pagelayout('standard');
 
 // Make sure course is OK and user has access to manage groups
@@ -40,7 +41,7 @@ if (!$course = $DB->get_record('course', array('id' => $courseid))) {
 }
 require_login($course);
 $context = context_course::instance($course->id);
-require_capability('moodle/course:managegroups', $context);
+// require_capability('moodle/course:managegroups', $context);
 $changeidnumber = has_capability('moodle/course:changeidnumber', $context);
 
 // Make sure all groups are OK and belong to course
@@ -59,7 +60,7 @@ foreach($groupidarray as $groupid) {
     $groupnames[] = format_string($group->name);
 }
 
-$returnurl='index.php?id='.$course->id;
+$returnurl = $CFG->wwwroot.'/mod/groupmanagement/view.php?id='.$cmid;
 
 if(count($groupidarray)==0) {
     print_error('errorselectsome','group',$returnurl);
@@ -71,6 +72,7 @@ if ($confirm && data_submitted()) {
     }
 
     foreach($groupidarray as $groupid) {
+        $DB->delete_records("groupmanagement_options", array("groupid"=>$groupid));
         groups_delete_group($groupid);
     }
 
@@ -79,8 +81,8 @@ if ($confirm && data_submitted()) {
     $PAGE->set_title(get_string('deleteselectedgroup', 'group'));
     $PAGE->set_heading($course->fullname . ': '. get_string('deleteselectedgroup', 'group'));
     echo $OUTPUT->header();
-    $optionsyes = array('courseid'=>$courseid, 'groups'=>$groupids, 'sesskey'=>sesskey(), 'confirm'=>1);
-    $optionsno = array('id'=>$courseid);
+    $optionsyes = array('courseid'=>$courseid, 'groups'=>$groupids, 'sesskey'=>sesskey(), 'confirm'=>1, 'cmid'=>$cmid);
+    $optionsno = array('id'=>$courseid, 'id'=>$cmid);
     if(count($groupnames)==1) {
         $message=get_string('deletegroupconfirm', 'group', $groupnames[0]);
     } else {
@@ -91,7 +93,7 @@ if ($confirm && data_submitted()) {
         $message.='</ul>';
     }
     $formcontinue = new single_button(new moodle_url('delete.php', $optionsyes), get_string('yes'), 'post');
-    $formcancel = new single_button(new moodle_url('index.php', $optionsno), get_string('no'), 'get');
+    $formcancel = new single_button(new moodle_url('../view.php', $optionsno), get_string('no'), 'get');
     echo $OUTPUT->confirm($message, $formcontinue, $formcancel);
     echo $OUTPUT->footer();
 }
