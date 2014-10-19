@@ -206,6 +206,15 @@ if (isloggedin() && ($current !== false) ) {
     }
 }
 
+if ($groupmanagement->freezegroups == 1 || (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime)) {
+    if (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime) {
+        $freezeTime = gmdate("Y-m-d H:i:s", $groupmanagement->freezegroupsaftertime);
+        echo $OUTPUT->box(get_string("groupsfrozenaftertime", "groupmanagement").' '.$freezeTime, 'generalbox');
+    } else {
+        echo $OUTPUT->box(get_string("groupsfrozen", "groupmanagement"), 'generalbox');
+    }
+}
+
 /// Print the form
 $groupmanagementopen = true;
 $timenow = time();
