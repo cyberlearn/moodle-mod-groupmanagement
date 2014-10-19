@@ -37,7 +37,9 @@ $url = new moodle_url('/mod/groupmanagement/view.php', array('id'=>$id));
 if ($action !== '') {
     $url->param('action', $action);
 }
+
 $PAGE->set_url($url);
+$PAGE->requires->jquery();
 
 if (! $cm = get_coursemodule_from_id('groupmanagement', $id)) {
     print_error('invalidcoursemodule');
@@ -52,6 +54,7 @@ require_login($course, false, $cm);
 if (!$groupmanagement = groupmanagement_get_groupmanagement($cm->instance)) {
     print_error('invalidcoursemodule');
 }
+
 $groupmanagement_groups = groupmanagement_get_groups($groupmanagement);
 $groupmanagement_users = array();
 
