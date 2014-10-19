@@ -234,8 +234,47 @@ function groupmanagement_update_instance($groupmanagement) {
     if (empty($groupmanagement->multipleenrollmentspossible)) {
         $groupmanagement->multipleenrollmentspossible = 0;
     }
-    
-    
+
+    if (empty($groupmanagement->limitmaxusersingroups)) {
+        $groupmanagement->limitmaxusersingroups = 0;
+    }
+
+    if (empty($groupmanagement->maxusersingroups)) {
+        $groupmanagement->maxusersingroups = 0;
+    }    
+
+    if (empty($groupmanagement->freezegroups)) {
+        $groupmanagement->freezegroups = 0;
+    }
+
+    if (empty($groupmanagement->freezegroupsaftertime)) {
+        $groupmanagement->freezegroupsaftertime = null;
+    }
+
+    if (empty($groupmanagement->displaygrouppicture)) {
+        $groupmanagement->displaygrouppicture = 0;
+    }
+
+    if (empty($groupmanagement->displaygroupvideo)) {
+        $groupmanagement->displaygroupvideo = 0;
+    }
+
+    if (empty($groupmanagement->groupcreationpossible)) {
+        $groupmanagement->groupcreationpossible = 0;
+    }
+
+    if (empty($groupmanagement->privategroupspossible)) {
+        $groupmanagement->privategroupspossible = 0;
+    }
+
+    if (empty($groupmanagement->limitmaxgroups)) {
+        $groupmanagement->limitmaxgroups = 0;
+    }
+
+    if (empty($groupmanagement->maxgroups)) {
+        $groupmanagement->maxgroups = 0;
+    }
+
     // deserialize the selected groups
     
     $groupIDs = explode(';', $groupmanagement->serializedselectedgroups);
@@ -306,6 +345,9 @@ function groupmanagement_prepare_options($groupmanagement, $user, $coursemodule,
             $option->attributes->value = $optionid;
             $option->groupid = $text;
             $option->maxanswers = $groupmanagement->maxanswers[$optionid];
+            $option->groupvideo = $groupmanagement->groupvideo[$optionid];
+            $option->creatorid = $groupmanagement->creatorid[$optionid];
+            $option->enrollementkey = $groupmanagement->enrollementkey[$optionid];
             $option->displaylayout = $groupmanagement->display;
 
             if (isset($allresponses[$text])) {
