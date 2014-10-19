@@ -20,7 +20,7 @@
         <FIELD NAME="limitmaxusersingroups" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="showunanswered" NEXT="maxusersingroups"/>
         <FIELD NAME="maxusersingroups" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="limitmaxusersingroups" NEXT="freezegroups"/>
         <FIELD NAME="freezegroups" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="maxusersingroups" NEXT="freezegroupsaftertime"/>
-        <FIELD NAME="freezegroupsaftertime" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="NULL" SEQUENCE="false" PREVIOUS="freezegroups" NEXT="displaygrouppicture"/>
+        <FIELD NAME="freezegroupsaftertime" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="freezegroups" NEXT="displaygrouppicture"/>
         <FIELD NAME="displaygrouppicture" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" PREVIOUS="freezegroupsaftertime" NEXT="displaygroupvideo" />
         <FIELD NAME="displaygroupvideo" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" PREVIOUS="displaygrouppicture" NEXT="groupcreationpossible"/>
         <FIELD NAME="groupcreationpossible" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="1" SEQUENCE="false" PREVIOUS="displaygroupvideo" NEXT="privategroupspossible"/>
