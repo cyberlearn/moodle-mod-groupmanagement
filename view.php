@@ -139,6 +139,15 @@ if (data_submitted() && is_enrolled($context, NULL, 'mod/groupmanagement:choose'
         if (empty($answer)) {
             redirect("view.php?id=$cm->id", get_string('mustchooseone', 'groupmanagement'));
         } else {
+            $enrollementkey = optional_param('enrollementkey'.$answer, '', PARAM_TEXT);
+            $selected_option = $DB->get_record('groupmanagement_options', array('id' => $answer));
+
+            if (!empty($selected_option->enrollementkey)) {
+                if ($enrollementkey != $selected_option->enrollementkey) {
+                    redirect("view.php?id=$cm->id");
+                }
+            }
+
             groupmanagement_user_submit_response($answer, $groupmanagement, $USER->id, $course, $cm);
         }
     }
