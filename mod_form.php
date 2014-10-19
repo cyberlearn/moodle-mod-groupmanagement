@@ -172,6 +172,28 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 			$mform->setType('group_' . $group->id . '_limit', PARAM_RAW);
 		}
 
+		$mform->addElement('checkbox', 'freezegroups', get_string('freezegroups', 'groupmanagement'));
+
+		$mform->addElement('date_time_selector', 'freezegroupsaftertime', get_string('freezegroupsaftertime', 'groupmanagement'), array('optional' => true));
+
+		$mform->addElement('checkbox', 'displaygrouppicture', get_string('displaygrouppicture', 'groupmanagement'));
+		$mform->setDefault('displaygrouppicture', 'checked');
+
+		$mform->addElement('checkbox', 'displaygroupvideo', get_string('displaygroupvideo', 'groupmanagement'));
+		$mform->setDefault('displaygroupvideo', 'checked');
+
+		$mform->addElement('checkbox', 'groupcreationpossible', get_string('groupcreationpossible', 'groupmanagement'));
+
+		$mform->addElement('checkbox', 'privategrouppossible', get_string('privategrouppossible', 'groupmanagement'));
+		$mform->disabledIf('privategrouppossible', 'groupcreationpossible', 'notchecked');
+
+		$mform->addElement('checkbox', 'limitmaxgroups', get_string('limitmaxgroups', 'groupmanagement'));
+
+		$mform->addElement('text', 'maxgroups', get_string('maxgroups', 'groupmanagement'), array('size' => 6));
+		$mform->setType('maxgroups', PARAM_INT);
+		$mform->addRule('maxgroups', get_string('error'), 'numeric', 'extraruledata', 'client', false, false);
+		$mform->setDefault('maxgroups', 0);
+		$mform->disabledIf('limitmaxgroups', 'maxgroups', 'notchecked');
 
 		$serializedselectedgroupsValue = '';
 		if (isset($this->_instance) && $this->_instance != '') {
@@ -183,7 +205,6 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 			}
 
 		}
-
 
 		$mform->addElement('hidden', 'serializedselectedgroups', $serializedselectedgroupsValue, array('id' => 'serializedselectedgroups'));
 		$mform->setType('serializedselectedgroups', PARAM_RAW);
