@@ -106,9 +106,22 @@ if (data_submitted() && is_enrolled($context, NULL, 'mod/groupmanagement:choose'
     if ($groupmanagement->multipleenrollmentspossible == 1) {
         $number_of_groups = optional_param('number_of_groups', '', PARAM_INT);
 
+        $incorrectEnrollementKey = false;
+
         for ($i = 0; $i < $number_of_groups; $i++) {
             $answer_value = optional_param('answer_' . $i, '', PARAM_INT);
             if ($answer_value != '') {
+                $selected_option = $DB->get_record('groupmanagement_options', array('id' =>$answer_value));
+                if (!groups_is_member($selected_option->groupid, $USER->id)) {
+                    $enrollementkey = optional_param('enrollementKeyKey'.$answer_value, '', PARAM_TEXT);
+                    if (!empty($selected_option->enrollementkey)) {
+                        if ($enrollementkey != $selected_option->enrollementkey) {
+                            $incorrectEnrollementKey = true;
+                            continue;
+                        }
+                    }
+                }
+
                 groupmanagement_user_submit_response($answer_value, $groupmanagement, $USER->id, $course, $cm);
             } else {
                 $answer_value_group_id = optional_param('answer_'.$i.'_groupid', '', PARAM_INT);
@@ -124,6 +137,9 @@ if (data_submitted() && is_enrolled($context, NULL, 'mod/groupmanagement:choose'
             }
         }
 
+        if($incorrectEnrollementKey) {
+            redirect("view.php?id=$cm->id&error=1");
+        }
 
     } else { // multipleenrollmentspossible != 1
 

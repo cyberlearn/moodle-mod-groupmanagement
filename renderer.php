@@ -111,6 +111,13 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
                 $option->attributes->name = 'answer_'.$i;
                 $option->attributes->type = 'checkbox';
                 $answer_to_groupid_mappings .= '<input type="hidden" name="answer_'.$i.'_groupid" value="'.$option->groupid.'">';
+                $option->attributes->onchange = 'if ($("#enrollementKeyKey" + this.value).css("display") == "none" && $(this).is(":checked")) {
+                                                    $("#enrollementKeyKey" + this.value).show();
+                                                    $("#enrollementKeyLabel" + this.value).show();
+                                                 } else {
+                                                    $("#enrollementKeyKey" + this.value).hide();
+                                                    $("#enrollementKeyLabel" + this.value).hide();
+                                                 }';
                 $i++;
             } else {
                 $option->attributes->name = 'answer';
@@ -247,7 +254,21 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
                     foreach ($private_groups_id as $private_group_id) {
                         $groupmanagement_option = $DB->get_record('groupmanagement_options', array('id'=>$private_group_id));
                         $groupName = $groupmanagement_groups[$groupmanagement_option->groupid]->name;
-                        $html .= html_writer::tag('label', get_string('enrollementKeyForgroupmanagement', 'groupmanagement').' '.$groupName, array('for'=>'enrollementKeyKey'.$private_group_id, 'id'=>'enrollementKeyLabel'.$private_group_id, 'class'=>'enrollementKey', 'style'=>'display: none;'));
+                        $labelText = '<b>'.get_string('enrollementKeyForgroupmanagement', 'groupmanagement').' '.$groupName.'</b><br />';
+                        
+                        if (!empty($groupmanagement_option->creatorid)) {
+                            $group_creator_links = '';
+                            $group_creator = $DB->get_record('user', array('id' => $groupmanagement_option->creatorid));
+                            if (isset($group_creator)) {
+                                $url = new moodle_url('/message/index.php', array('id'=>$option->creatorid, 'course'=>$course->id));
+                                $group_creator_name = $group_creator->firstname.' '.$group_creator->lastname;
+                                $group_creator_links .= html_writer::link($url, $group_creator_name);
+                            }
+
+                            $labelText .= get_string('requestEnrollementKeyFrom', 'groupmanagement').' '.$group_creator_links.'<br />';    
+                        }
+
+                        $html .= html_writer::tag('label', $labelText, array('for'=>'enrollementKeyKey'.$private_group_id, 'id'=>'enrollementKeyLabel'.$private_group_id, 'class'=>'enrollementKey', 'style'=>'display: none;'));
                         $html .= html_writer::empty_tag('input', array('type'=>'password', 'name'=>'enrollementKeyKey'.$private_group_id, 'id'=>'enrollementKeyKey'.$private_group_id, 'class'=>'enrollementKey', 'style'=>'display: none;'));
                     }
                     if ($groupmanagement->freezegroups == 0 && (empty($groupmanagement->freezegroupsaftertime) || time() < $groupmanagement->freezegroupsaftertime)) {

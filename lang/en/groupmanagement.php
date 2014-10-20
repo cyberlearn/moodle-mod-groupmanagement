@@ -142,6 +142,7 @@ $string['double_click_grouping_legend'] = 'Double click on a grouping to expand/
 $string['double_click_group_legend'] = 'Double click on a group to add it.';
 
 $string['enrollementKeyForgroupmanagement'] = 'Enrollement key for the group';
+$string['requestEnrollementKeyFrom'] = 'Request the enrollement key from';
 $string['incorrectEnrollementKey'] = 'Incorrect enrollement key';
 $string['creategroup'] = 'Create a group';
 $string['groupselectionlocked'] = 'The group selection has been manualy locked';
