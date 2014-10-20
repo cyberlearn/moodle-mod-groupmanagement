@@ -109,11 +109,11 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 		$mform->addElement('select', 'limitmaxusersingroups', get_string('limitmaxusersingroups', 'groupmanagement'), $menuoptions);
 		$mform->addHelpButton('limitmaxusersingroups', 'limitmaxusersingroups', 'groupmanagement');
 
-		$mform->addElement('text', 'generallimitation', get_string('generallimitation', 'groupmanagement'), array('size' => '6'));
-		$mform->setType('generallimitation', PARAM_INT);
-		$mform->disabledIf('generallimitation', 'limitmaxusersingroups', 'neq', 1);
-		$mform->addRule('generallimitation', get_string('error'), 'numeric', 'extraruledata', 'client', false, false);
-		$mform->setDefault('generallimitation', 0);
+		$mform->addElement('text', 'maxusersingroups', get_string('generallimitation', 'groupmanagement'), array('size' => '6'));
+		$mform->setType('maxusersingroups', PARAM_INT);
+		$mform->disabledIf('maxusersingroups', 'limitmaxusersingroups', 'neq', 1);
+		$mform->addRule('maxusersingroups', get_string('error'), 'numeric', 'extraruledata', 'client', false, false);
+		$mform->setDefault('maxusersingroups', 0);
 		$mform->addElement('button', 'setlimit', get_string('applytoallgroups', 'groupmanagement'));
 		$mform->disabledIf('setlimit', 'limitmaxusersingroups', 'neq', 1);
 
@@ -184,8 +184,8 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 
 		$mform->addElement('checkbox', 'groupcreationpossible', get_string('groupcreationpossible', 'groupmanagement'));
 
-		$mform->addElement('checkbox', 'privategrouppossible', get_string('privategrouppossible', 'groupmanagement'));
-		$mform->disabledIf('privategrouppossible', 'groupcreationpossible', 'notchecked');
+		$mform->addElement('checkbox', 'privategroupspossible', get_string('privategroupspossible', 'groupmanagement'));
+		$mform->disabledIf('privategroupspossible', 'groupcreationpossible', 'notchecked');
 
 		$mform->addElement('checkbox', 'limitmaxgroups', get_string('limitmaxgroups', 'groupmanagement'));
 
