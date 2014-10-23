@@ -40,8 +40,10 @@ class group_form extends moodleform {
      * Definition of the form
      */
     function definition () {
-        global $USER, $CFG, $COURSE, $cgid, $cmid;
+        global $USER, $CFG, $DB, $COURSE, $cgid, $cmid;
         $coursecontext = context_course::instance($COURSE->id);
+
+        $groupmanagement = $DB->get_record("groupmanagement", array("id"=>$cgid));
 
         $mform =& $this->_form;
         $editoroptions = $this->_customdata['editoroptions'];
@@ -58,12 +60,16 @@ class group_form extends moodleform {
         $mform->addElement('filepicker', 'imagefile', get_string('newpicture', 'group'));
         $mform->addHelpButton('imagefile', 'newpicture', 'group');
 
-        $attributes = array('placeholder' => 'http://', 'maxlength' => '254', 'size' => '100');
-        $mform->addElement('text', 'groupvideo', get_string('groupvideo', 'groupmanagement'), $attributes, get_string('groupvideo', 'groupmanagement'));
-        $mform->setType('groupvideo', PARAM_URL);
-        
-        $mform->addElement('passwordunmask', 'enrollementkey', get_string('groupenrollementkey', 'groupmanagement'), 'maxlength="254" size="24"', get_string('groupenrollementkey', 'groupmanagement'));
-        $mform->setType('enrollementkey', PARAM_RAW);
+        if (!empty($groupmanagement) && $groupmanagement->displaygroupvideo == 1) {
+            $attributes = array('placeholder' => 'http://', 'maxlength' => '254', 'size' => '100');
+            $mform->addElement('text', 'groupvideo', get_string('groupvideo', 'groupmanagement'), $attributes, get_string('groupvideo', 'groupmanagement'));
+            $mform->setType('groupvideo', PARAM_URL);
+        }
+    
+        if (!empty($groupmanagement) && $groupmanagement->privategroupspossible == 1) {
+            $mform->addElement('passwordunmask', 'enrollementkey', get_string('groupenrollementkey', 'groupmanagement'), 'maxlength="254" size="24"', get_string('groupenrollementkey', 'groupmanagement'));
+            $mform->setType('enrollementkey', PARAM_RAW);
+        }
 
         $mform->addElement('hidden','cgid', $cgid);
         $mform->setType('cgid', PARAM_INT);
