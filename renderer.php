@@ -67,7 +67,10 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
                 $html .= html_writer::tag('th', get_string('members/', 'groupmanagement'));
             }
 
-            $html .= html_writer::tag('th', get_string('private', 'groupmanagement'));
+            if (!empty($groupmanagement->privategroupspossible) && $groupmanagement->privategroupspossible == 1) {
+                $html .= html_writer::tag('th', get_string('private', 'groupmanagement'));
+            }
+
             $html .= html_writer::tag('th', get_string('groupcreator', 'groupmanagement'));
 
             if ($publish == GROUPMANAGEMENT_PUBLISH_NAMES) {
@@ -183,12 +186,14 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
                 $maxanswers = ($limitmaxusersingroups) ? (' / '.$option->maxanswers) : ('');
                 $html .= html_writer::tag('td', sizeof($group_members).$maxanswers, array('class' => 'center'));
 
-                $privateImage = '';
-                if (isset($option->enrollementkey)) {
-                    $privateImage = '<img src="'.$this->output->pix_url('t/locked').'" alt="'.get_string('private', 'groupmanagement').'" />';
-                    $private_groups_id[] = $option->attributes->value;
+                if (!empty($groupmanagement->privategroupspossible) && $groupmanagement->privategroupspossible == 1) {
+                    $privateImage = '';
+                    if (isset($option->enrollementkey)) {
+                        $privateImage = '<img src="'.$this->output->pix_url('t/locked').'" alt="'.get_string('private', 'groupmanagement').'" />';
+                        $private_groups_id[] = $option->attributes->value;
+                    }
+                    $html .= html_writer::tag('td', $privateImage, array('class' => 'center'));
                 }
-                $html .= html_writer::tag('td', $privateImage, array('class' => 'center'));
                 
                 $group_creator_links = '-';
                 if (isset($option->creatorid)) {
@@ -287,11 +292,13 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
         } else {
             $html .= html_writer::tag('div', get_string('havetologin', 'groupmanagement'));
         }
-
-        if ($groupmanagement->freezegroups == 0 && (empty($groupmanagement->freezegroupsaftertime) || time() < $groupmanagement->freezegroupsaftertime)) {
-            if ($groupmanagement->limitmaxgroups == 0 || count($options['options']) < $groupmanagement->maxgroups) {
-                $url = new moodle_url('/mod/groupmanagement/group/group.php', array('cgid'=>$groupmanagement->id, 'cmid'=>$coursemoduleid, 'courseid'=>$course->id));
-                $html .= '<br/>'.html_writer::empty_tag('input', array('type'=>'button', 'value'=>get_string('creategroup','groupmanagement'), 'class'=>'button', 'onclick'=>'window.location="'.html_entity_decode($url).'"'));
+        
+        if ($groupmanagement->groupcreationpossible == 1) {    
+            if ($groupmanagement->freezegroups == 0 && (empty($groupmanagement->freezegroupsaftertime) || time() < $groupmanagement->freezegroupsaftertime)) {
+                if ($groupmanagement->limitmaxgroups == 0 || count($options['options']) < $groupmanagement->maxgroups) {
+                    $url = new moodle_url('/mod/groupmanagement/group/group.php', array('cgid'=>$groupmanagement->id, 'cmid'=>$coursemoduleid, 'courseid'=>$course->id));
+                    $html .= '<br/>'.html_writer::empty_tag('input', array('type'=>'button', 'value'=>get_string('creategroup','groupmanagement'), 'class'=>'button', 'onclick'=>'window.location="'.html_entity_decode($url).'"'));
+                }
             }
         }
 

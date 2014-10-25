@@ -27,7 +27,8 @@
 .path-mod-groupmanagement .results.names .cell{vertical-align: top; text-align: left;}
 .path-mod-groupmanagement .results.names .user,
 .path-mod-groupmanagement .enrollementKeyError,
-.path-mod-groupmanagement #yourselection {padding: 5px;}
+.path-mod-groupmanagement #yourselection,
+.path-mod-groupmanagement #frozenlabel {padding: 5px;}
 .path-mod-groupmanagement .enrollementKeyError {color: red;}
 .path-mod-groupmanagement .results.names .user .attemptaction,
 .path-mod-groupmanagement .results.names .user .image,

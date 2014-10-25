@@ -80,7 +80,7 @@ $groupmanagement = $DB->get_record("groupmanagement", array("id"=>$cgid));
 $groupmanagement_options = $DB->get_record("groupmanagement_options", array("groupid"=>$id));
 
 // If the group management activity is frozen
-if ($groupmanagement->freezegroups == 1 || (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime) {
+if ($groupmanagement->freezegroups == 1 || (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime)) {
     print_error('courseIsFrozen', 'groupmanagement');
 }
 
@@ -102,7 +102,7 @@ if (!empty($group->id)) {
     $group = file_prepare_standard_editor($group, 'description', $editoroptions, $context, 'group', 'description', null);
 }
 
-if (isset($id) && $option = $DB->get_record("groupmanagement_options", array("groupid"=>$id)) {
+if (isset($id) && $option = $DB->get_record("groupmanagement_options", array("groupid"=>$id))) {
     if (!empty($option->groupvideo)) {
         $group->groupvideo = 'https://www.youtube.com/watch?v='.$option->groupvideo;
     } else {

@@ -114,10 +114,13 @@ if (data_submitted() && is_enrolled($context, NULL, 'mod/groupmanagement:choose'
                 $selected_option = $DB->get_record('groupmanagement_options', array('id' =>$answer_value));
                 if (!groups_is_member($selected_option->groupid, $USER->id)) {
                     $enrollementkey = optional_param('enrollementKeyKey'.$answer_value, '', PARAM_TEXT);
-                    if (!empty($selected_option->enrollementkey)) {
-                        if ($enrollementkey != $selected_option->enrollementkey) {
-                            $incorrectEnrollementKey = true;
-                            continue;
+                    
+                    if ($groupmanagement->privategroupspossible == 1) {
+                        if (!empty($selected_option->enrollementkey)) {
+                            if ($enrollementkey != $selected_option->enrollementkey) {
+                                $incorrectEnrollementKey = true;
+                                continue;
+                            }
                         }
                     }
                 }
@@ -159,9 +162,11 @@ if (data_submitted() && is_enrolled($context, NULL, 'mod/groupmanagement:choose'
             $enrollementkey = optional_param('enrollementKeyKey'.$answer, '', PARAM_TEXT);
             $selected_option = $DB->get_record('groupmanagement_options', array('id' => $answer));
 
-            if (!empty($selected_option->enrollementkey)) {
-                if ($enrollementkey != $selected_option->enrollementkey) {
-                    redirect("view.php?id=$cm->id&error=1");
+            if ($groupmanagement->privategroupspossible == 1) {
+                if (!empty($selected_option->enrollementkey)) {
+                    if ($enrollementkey != $selected_option->enrollementkey) {
+                        redirect("view.php?id=$cm->id&error=1");
+                    }
                 }
             }
 
@@ -230,9 +235,9 @@ if(isset($error) && $error == 1) {
 if ($groupmanagement->freezegroups == 1 || (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime)) {
     if (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime) {
         $freezeTime = gmdate("Y-m-d H:i:s", $groupmanagement->freezegroupsaftertime);
-        echo $OUTPUT->box(get_string("groupsfrozenaftertime", "groupmanagement").' '.$freezeTime, 'generalbox');
+        echo $OUTPUT->box(get_string("groupsfrozenaftertime", "groupmanagement").' '.$freezeTime, 'generalbox', 'frozenlabel');
     } else {
-        echo $OUTPUT->box(get_string("groupsfrozen", "groupmanagement"), 'generalbox');
+        echo $OUTPUT->box(get_string("groupsfrozen", "groupmanagement"), 'generalbox', 'frozenlabel');
     }
 }
 
