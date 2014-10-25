@@ -58,7 +58,6 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 			$data = new stdClass();
 			$data->courseid = $COURSE->id;
 			$data->name = 'Group '.$groupsToCreate;
-			$data->description = '-';
 			groups_create_group($data);
 			$groupsToCreate--;
 		}
@@ -91,6 +90,7 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 		// Groups section
 		// -------------------------
 		$mform->addElement('header', 'groups', get_string('groupsheader', 'groupmanagement'));
+		$mform->setExpanded('groups');
 
 		$mform->addElement('selectyesno', 'groupcreationpossible', get_string('groupcreationpossible', 'groupmanagement'));
 
@@ -130,6 +130,17 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 		$mform->addElement('button', 'setlimit', get_string('applytoallgroups', 'groupmanagement'));
 		$mform->disabledIf('setlimit', 'limitmaxusersingroups', 'eq', 0);
 
+		// -------------------------
+		// Advanced section
+		// -------------------------
+		$mform->addElement('header', 'advancedsettingshdr', get_string('advancedheader', 'groupmanagement'));
+
+		$mform->addElement('checkbox', 'displaygrouppicture', get_string('displaygrouppicture', 'groupmanagement'));
+		$mform->setDefault('displaygrouppicture', 'checked');
+
+		$mform->addElement('checkbox', 'displaygroupvideo', get_string('displaygroupvideo', 'groupmanagement'));
+		$mform->setDefault('displaygroupvideo', 'checked');
+
 		$mform->addElement('html', '<fieldset class="clearfix">
 				<div class="fcontainer clearfix">
 				<div id="fitem_id_option_0" class="fitem fitem_fselect ">
@@ -157,32 +168,27 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 
 		$mform->addElement('html','
 				</td><td><button id="addGroupButton" name="add" type="button" disabled>'.get_string('add', 'groupmanagement').'</button><div><button name="remove" type="button" disabled id="removeGroupButton">'.get_string('del', 'groupmanagement').'</button></div></td>');
-		$mform->addElement('html','<td style="vertical-align: top"><select id="id_selectedGroups" name="selectedGroups" multiple size=10 style="width:200px"></select></td>');
+		$mform->addElement('html','<td style="vertical-align: top"><select id="id_selectedGroups" name="selectedGroups" multiple size=10 style="width:200px">');
 
-		$mform->addElement('html','<td><div><div id="fitem_id_limit_0" class="fitem fitem_ftext" style="display:none"><div class=""><label for="id_limit_0" id="label_for_limit_ui">'.get_string('set_limit_for_group', 'groupmanagement').'</label></div><div class="ftext">
+		if (!isset($this->_instance) || empty($this->_instance)) {
+			foreach ($groups as $group) {
+				if ($group->mentioned === false) {
+					$mform->addElement('html', '<option value="'.$group->id.'" class="group toplevel">'.$group->name.'</option>');
+				}
+			}
+		}
+
+		$mform->addElement('html','</select></td><td><div><div id="fitem_id_limit_0" class="fitem fitem_ftext" style="display:none"><div class=""><label for="id_limit_0" id="label_for_limit_ui">'.get_string('set_limit_for_group', 'groupmanagement').'</label></div><div class="ftext">
 				<input class="mod-groupmanagement-limit-input" type="text" value="0" id="ui_limit_input" disabled="disabled"></div></div></div></td></tr></table>
 				</div></div>
 
 				</div>
 				</fieldset>');
 
-		$mform->setExpanded('groups');
-
 		foreach ($groups as $group) {
 			$mform->addElement('hidden', 'group_' . $group->id . '_limit', '', array('id' => 'group_' . $group->id . '_limit', 'class' => 'limit_input_node'));
 			$mform->setType('group_' . $group->id . '_limit', PARAM_RAW);
 		}
-
-		// -------------------------
-		// Advanced section
-		// -------------------------
-		$mform->addElement('header', 'advancedsettingshdr', get_string('advancedheader', 'groupmanagement'));
-
-		$mform->addElement('checkbox', 'displaygrouppicture', get_string('displaygrouppicture', 'groupmanagement'));
-		$mform->setDefault('displaygrouppicture', 'checked');
-
-		$mform->addElement('checkbox', 'displaygroupvideo', get_string('displaygroupvideo', 'groupmanagement'));
-		$mform->setDefault('displaygroupvideo', 'checked');
 
 		$mform->addElement('selectyesno', 'showunanswered', get_string("showunanswered", "groupmanagement"));
 
@@ -217,16 +223,15 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 		$this->add_action_buttons();
 }
 
-function data_preprocessing(&$default_values){
-	global $DB;
-	$this->js_call();
+	function data_preprocessing(&$default_values) {
+		global $DB;
+		$this->js_call();
 
-	if (empty($default_values['timeopen'])) {
-		$default_values['timerestrict'] = 0;
-	} else {
-		$default_values['timerestrict'] = 1;
-	}
-
+		if (empty($default_values['timeopen'])) {
+			$default_values['timerestrict'] = 0;
+		} else {
+			$default_values['timerestrict'] = 1;
+		}
 	}
 
 	function validation($data, $files) {
