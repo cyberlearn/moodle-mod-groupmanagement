@@ -24,7 +24,7 @@ YUI.add('moodle-mod_groupmanagement-form', function(Y) {
 			EXPAND_ALL_GRPNGS_BTN: '#expandButton',
 			COLLAPSE_ALL_GRPNGS_BTN: '#collapseButton',
 			SERIALIZED_SELECTED_GRPS_LIST: '#serializedselectedgroups',
-			GLOBAL_LIMIT_INPUT: '#id_generallimitation',
+			GLOBAL_LIMIT_INPUT: '#id_maxusersingroups',
 			HIDDEN_LIMIT_INPUTS: 'input.limit_input_node',
 	};
 	Y.namespace('Moodle.mod_groupmanagement.form');

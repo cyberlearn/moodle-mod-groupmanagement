@@ -35,7 +35,9 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 
 		$mform    =& $this->_form;
 
-		//-------------------------------------------------------------------------------
+		// -------------------------
+		// General section
+		// -------------------------
 		$mform->addElement('header', 'general', get_string('general', 'form'));
 
 		$mform->addElement('text', 'name', get_string('groupmanagementname', 'groupmanagement'), array('size'=>'64'));
@@ -48,12 +50,6 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 
 		$this->add_intro_editor(true, get_string('chatintro', 'chat'));
 
-		//-------------------------------------------------------------------------------
-
-
-		// -------------------------
-		// Fetch data from database
-		// -------------------------
 		$groups = array();
 		$db_groups = $DB->get_records('groups', array('courseid' => $COURSE->id));
 		foreach ($db_groups as $group) {
@@ -82,48 +78,50 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
                 $groupings[$grouping_group_link->groupingid]->linkedGroupsIDs[] =  $grouping_group_link->groupid;
             }
         }
-		// -------------------------
-		// -------------------------
 
 		// -------------------------
-		// Continue generating form
+		// Groups section
 		// -------------------------
-		$mform->addElement('header', 'miscellaneoussettingshdr', get_string('miscellaneoussettings', 'form'));
-		$mform->setExpanded('miscellaneoussettingshdr');
-		$mform->addElement('checkbox', 'multipleenrollmentspossible', get_string('multipleenrollmentspossible', 'groupmanagement'));
+		$mform->addElement('header', 'groups', get_string('groupsheader', 'groupmanagement'));
 
-		$mform->addElement('select', 'showresults', get_string("publish", "groupmanagement"), $GROUPMANAGEMENT_SHOWRESULTS);
-		$mform->setDefault('showresults', GROUPMANAGEMENT_SHOWRESULTS_DEFAULT);
+		$mform->addElement('selectyesno', 'groupcreationpossible', get_string('groupcreationpossible', 'groupmanagement'));
 
-		$mform->addElement('select', 'publish', get_string("privacy", "groupmanagement"), $GROUPMANAGEMENT_PUBLISH, GROUPMANAGEMENT_PUBLISH_DEFAULT);
-		$mform->setDefault('publish', GROUPMANAGEMENT_PUBLISH_DEFAULT);
-		$mform->disabledIf('publish', 'showresults', 'eq', 0);
+		$mform->addElement('selectyesno', 'privategroupspossible', get_string('privategroupspossible', 'groupmanagement'));
+		$mform->disabledIf('privategroupspossible', 'groupcreationpossible', 'eq', 0);
 
 		$mform->addElement('selectyesno', 'allowupdate', get_string("allowupdate", "groupmanagement"));
 
-		$mform->addElement('selectyesno', 'showunanswered', get_string("showunanswered", "groupmanagement"));
+		$mform->addElement('selectyesno', 'multipleenrollmentspossible', get_string('multipleenrollmentspossible', 'groupmanagement'));
 
-		$menuoptions = array();
-		$menuoptions[0] = get_string('disable');
-		$menuoptions[1] = get_string('enable');
-		$mform->addElement('select', 'limitmaxusersingroups', get_string('limitmaxusersingroups', 'groupmanagement'), $menuoptions);
+		$mform->addElement('selectyesno', 'limitmaxgroups', get_string('limitmaxgroups', 'groupmanagement'));
+
+		$mform->addElement('text', 'maxgroups', get_string('maxgroups', 'groupmanagement'), array('size' => 6));
+		$mform->setType('maxgroups', PARAM_INT);
+		$mform->addRule('maxgroups', get_string('error'), 'numeric', 'extraruledata', 'client', false, false);
+		$mform->setDefault('maxgroups', 0);
+		$mform->disabledIf('maxgroups', 'limitmaxgroups', 'eq', 0);
+
+		$serializedselectedgroupsValue = '';
+		if (isset($this->_instance) && $this->_instance != '') {
+			// this is presumably edit mode, try to fill in the data for javascript
+			$cg = groupmanagement_get_groupmanagement($this->_instance);
+			foreach ($cg->option as $optionID => $groupID) {
+				$serializedselectedgroupsValue .= ';' . $groupID;
+				$mform->setDefault('group_' . $groupID . '_limit', $cg->maxanswers[$optionID]);
+			}
+		}
+
+		$mform->addElement('selectyesno', 'limitmaxusersingroups', get_string('limitmaxusersingroups', 'groupmanagement'));
 		$mform->addHelpButton('limitmaxusersingroups', 'limitmaxusersingroups', 'groupmanagement');
 
 		$mform->addElement('text', 'maxusersingroups', get_string('generallimitation', 'groupmanagement'), array('size' => '6'));
 		$mform->setType('maxusersingroups', PARAM_INT);
-		$mform->disabledIf('maxusersingroups', 'limitmaxusersingroups', 'neq', 1);
+		$mform->disabledIf('maxusersingroups', 'limitmaxusersingroups', 'eq', 0);
 		$mform->addRule('maxusersingroups', get_string('error'), 'numeric', 'extraruledata', 'client', false, false);
 		$mform->setDefault('maxusersingroups', 0);
 		$mform->addElement('button', 'setlimit', get_string('applytoallgroups', 'groupmanagement'));
-		$mform->disabledIf('setlimit', 'limitmaxusersingroups', 'neq', 1);
+		$mform->disabledIf('setlimit', 'limitmaxusersingroups', 'eq', 0);
 
-
-		// -------------------------
-		// Generate the groups section of the form
-		// -------------------------
-
-
-		$mform->addElement('header', 'groups', get_string('groupsheader', 'groupmanagement'));
 		$mform->addElement('html', '<fieldset class="clearfix">
 				<div class="fcontainer clearfix">
 				<div id="fitem_id_option_0" class="fitem fitem_fselect ">
@@ -149,11 +147,6 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 		}
 		$mform->addElement('html','</select><br><button name="expandButton" type="button" disabled id="expandButton">'.get_string('expand_all_groupings', 'groupmanagement').'</button><button name="collapseButton" type="button" disabled id="collapseButton">'.get_string('collapse_all_groupings', 'groupmanagement').'</button><br>'.get_string('double_click_grouping_legend', 'groupmanagement').'<br>'.get_string('double_click_group_legend', 'groupmanagement'));
 
-
-
-
-
-
 		$mform->addElement('html','
 				</td><td><button id="addGroupButton" name="add" type="button" disabled>'.get_string('add', 'groupmanagement').'</button><div><button name="remove" type="button" disabled id="removeGroupButton">'.get_string('del', 'groupmanagement').'</button></div></td>');
 		$mform->addElement('html','<td style="vertical-align: top"><select id="id_selectedGroups" name="selectedGroups" multiple size=10 style="width:200px"></select></td>');
@@ -172,9 +165,10 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 			$mform->setType('group_' . $group->id . '_limit', PARAM_RAW);
 		}
 
-		$mform->addElement('checkbox', 'freezegroups', get_string('freezegroups', 'groupmanagement'));
-
-		$mform->addElement('date_time_selector', 'freezegroupsaftertime', get_string('freezegroupsaftertime', 'groupmanagement'), array('optional' => true));
+		// -------------------------
+		// Advanced section
+		// -------------------------
+		$mform->addElement('header', 'advancedsettingshdr', get_string('advancedheader', 'groupmanagement'));
 
 		$mform->addElement('checkbox', 'displaygrouppicture', get_string('displaygrouppicture', 'groupmanagement'));
 		$mform->setDefault('displaygrouppicture', 'checked');
@@ -182,39 +176,24 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 		$mform->addElement('checkbox', 'displaygroupvideo', get_string('displaygroupvideo', 'groupmanagement'));
 		$mform->setDefault('displaygroupvideo', 'checked');
 
-		$mform->addElement('checkbox', 'groupcreationpossible', get_string('groupcreationpossible', 'groupmanagement'));
+		$mform->addElement('selectyesno', 'showunanswered', get_string("showunanswered", "groupmanagement"));
 
-		$mform->addElement('checkbox', 'privategroupspossible', get_string('privategroupspossible', 'groupmanagement'));
-		$mform->disabledIf('privategroupspossible', 'groupcreationpossible', 'notchecked');
+		$mform->addElement('select', 'showresults', get_string("publish", "groupmanagement"), $GROUPMANAGEMENT_SHOWRESULTS);
+		$mform->setDefault('showresults', GROUPMANAGEMENT_SHOWRESULTS_DEFAULT);
 
-		$mform->addElement('checkbox', 'limitmaxgroups', get_string('limitmaxgroups', 'groupmanagement'));
+		$mform->addElement('select', 'publish', get_string("privacy", "groupmanagement"), $GROUPMANAGEMENT_PUBLISH, GROUPMANAGEMENT_PUBLISH_DEFAULT);
+		$mform->setDefault('publish', GROUPMANAGEMENT_PUBLISH_DEFAULT);
+		$mform->disabledIf('publish', 'showresults', 'eq', 0);
 
-		$mform->addElement('text', 'maxgroups', get_string('maxgroups', 'groupmanagement'), array('size' => 6));
-		$mform->setType('maxgroups', PARAM_INT);
-		$mform->addRule('maxgroups', get_string('error'), 'numeric', 'extraruledata', 'client', false, false);
-		$mform->setDefault('maxgroups', 0);
-		$mform->disabledIf('limitmaxgroups', 'maxgroups', 'notchecked');
+		$mform->addElement('selectyesno', 'freezegroups', get_string('freezegroups', 'groupmanagement'));
 
-		$serializedselectedgroupsValue = '';
-		if (isset($this->_instance) && $this->_instance != '') {
-			// this is presumably edit mode, try to fill in the data for javascript
-			$cg = groupmanagement_get_groupmanagement($this->_instance);
-			foreach ($cg->option as $optionID => $groupID) {
-				$serializedselectedgroupsValue .= ';' . $groupID;
-				$mform->setDefault('group_' . $groupID . '_limit', $cg->maxanswers[$optionID]);
-			}
+		$mform->addElement('date_time_selector', 'freezegroupsaftertime', get_string('freezegroupsaftertime', 'groupmanagement'), array('optional' => true));
 
-		}
+		//-------------------------------------------------------------------------------
 
 		$mform->addElement('hidden', 'serializedselectedgroups', $serializedselectedgroupsValue, array('id' => 'serializedselectedgroups'));
 		$mform->setType('serializedselectedgroups', PARAM_RAW);
 
-		// -------------------------
-		// Go on the with the remainder of the form
-		// -------------------------
-
-
-		//-------------------------------------------------------------------------------
 		$mform->addElement('header', 'timerestricthdr', get_string('timerestrict', 'groupmanagement'));
 		$mform->addElement('checkbox', 'timerestrict', get_string('timerestrict', 'groupmanagement'));
 
