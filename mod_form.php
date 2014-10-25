@@ -52,15 +52,23 @@ class mod_groupmanagement_mod_form extends moodleform_mod {
 
 		$groups = array();
 		$db_groups = $DB->get_records('groups', array('courseid' => $COURSE->id));
+
+		$groupsToCreate = 2 - count($db_groups);
+		while ($groupsToCreate > 0) {
+			$data = new stdClass();
+			$data->courseid = $COURSE->id;
+			$data->name = 'Group '.$groupsToCreate;
+			$data->description = '-';
+			groups_create_group($data);
+			$groupsToCreate--;
+		}
+
+		$db_groups = $DB->get_records('groups', array('courseid' => $COURSE->id));
 		foreach ($db_groups as $group) {
 			$groups[$group->id] = new stdClass();
 			$groups[$group->id]->name = $group->name;
 			$groups[$group->id]->mentioned = false;
 			$groups[$group->id]->id = $group->id;
-		}
-
-		if (count($db_groups) < 2) {
-			print_error('pleasesetgroups', 'groupmanagement', new moodle_url('/course/view.php?id='.$COURSE->id));
 		}
 
 		$db_groupings = $DB->get_records('groupings', array('courseid' => $COURSE->id));
