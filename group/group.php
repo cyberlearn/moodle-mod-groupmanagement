@@ -75,6 +75,15 @@ require_login($course);
 $context = context_course::instance($course->id);
 //require_capability('moodle/course:managegroups', $context);
 
+$hasManageGroupsCapability = has_capability('mod/groupmanagement:managegroups', $context);
+$groupmanagement = $DB->get_record("groupmanagement", array("id"=>$cgid));
+$groupmanagement_options = $DB->get_record("groupmanagement_options", array("groupid"=>$id));
+
+// If the group management activity is frozen
+if ($groupmanagement->freezegroups == 1 || (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime) {
+    print_error('courseIsFrozen', 'groupmanagement');
+}
+
 $strgroups = get_string('groups');
 $PAGE->set_title($strgroups);
 $PAGE->set_heading($course->fullname . ': '.$strgroups);
@@ -93,7 +102,7 @@ if (!empty($group->id)) {
     $group = file_prepare_standard_editor($group, 'description', $editoroptions, $context, 'group', 'description', null);
 }
 
-if (isset($id) && $option = $DB->get_record("groupmanagement_options", array("groupid" => $id))) {
+if (isset($id) && $option = $DB->get_record("groupmanagement_options", array("groupid"=>$id)) {
     if (!empty($option->groupvideo)) {
         $group->groupvideo = 'https://www.youtube.com/watch?v='.$option->groupvideo;
     } else {
@@ -116,6 +125,11 @@ if ($editform->is_cancelled()) {
     }
 
     if ($data->id) {
+        // If the current user has no right to edit the group
+        if (!$hasManageGroupsCapability && (!empty($groupmanagement_options) && $groupmanagement_options->creatorid =! $USER->id)) { 
+            print_error('userHasNoRightToManageGroups', 'groupmanagement');
+        }
+
         groups_update_group($data, $editform, $editoroptions);
         $option = $DB->get_record("groupmanagement_options", array("groupid" => $data->id));
         $option->timemodified = time();
@@ -136,6 +150,11 @@ if ($editform->is_cancelled()) {
 
         $DB->update_record("groupmanagement_options", $option);
     } else {
+        // If the current user can not create new groups
+        if (!$hasManageGroupsCapability && $groupmanagement->groupcreationpossible == 0) { 
+            print_error('userHasNoRightToManageGroups', 'groupmanagement');
+        }
+
         $id = groups_create_group($data, $editform, $editoroptions);
 
         // Update the Group Choice database

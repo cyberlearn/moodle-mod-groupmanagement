@@ -39,7 +39,7 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
      * @return string
      */
     public function display_options($options, $coursemoduleid, $vertical = true, $publish = false, $limitmaxusersingroups = false, $showresults = false, $current = false, $groupmanagementopen = false, $disabled = false, $multipleenrollmentspossible = false) {
-        global $DB, $PAGE, $USER, $OUTPUT, $course, $groupmanagement_groups, $groupmanagement_users, $groupmanagement;
+        global $DB, $PAGE, $USER, $OUTPUT, $course, $groupmanagement_groups, $groupmanagement_users, $groupmanagement, $context;
 
         $PAGE->requires->js('/mod/groupmanagement/javascript.js');
 
@@ -221,7 +221,8 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
                 }
 
                 $actionLinks = '';
-                if (isset($option->creatorid) && $option->creatorid == $USER->id) {
+                $hasManageGroupsCapability = has_capability('mod/groupmanagement:managegroups', $context);
+                if ($hasManageGroupsCapability || (isset($option->creatorid) && $option->creatorid == $USER->id)) {
                     if ($groupmanagement->freezegroups == 0 && (empty($groupmanagement->freezegroupsaftertime) || time() < $groupmanagement->freezegroupsaftertime)) {
                         $url = new moodle_url('/mod/groupmanagement/group/group.php', array('id'=>$option->groupid, 'courseid'=>$course->id, 'cgid'=>$groupmanagement->id, 'cmid'=>$coursemoduleid));
                         $editImage = '<img src="'.$this->output->pix_url('t/edit').'" alt="'.get_string('edit', 'moodle').'" />';

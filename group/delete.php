@@ -41,13 +41,17 @@ if (!$course = $DB->get_record('course', array('id' => $courseid))) {
 }
 require_login($course);
 $context = context_course::instance($course->id);
+
 // require_capability('moodle/course:managegroups', $context);
 $changeidnumber = has_capability('moodle/course:changeidnumber', $context);
+$hasManageGroupsCapability = has_capability('mod/groupmanagement:managegroups', $context);
+$groupmanagement = $DB->get_record("groupmanagement", array("id"=>$cmid));
 
 // Make sure all groups are OK and belong to course
 $groupidarray = explode(',',$groupids);
 $groupnames = array();
 foreach($groupidarray as $groupid) {
+    $groupmanagement_options = $DB->get_record("groupmanagement_options", array("groupid"=>$groupid));
     if (!$group = $DB->get_record('groups', array('id' => $groupid))) {
         print_error('invalidgroupid');
     }
@@ -56,6 +60,14 @@ foreach($groupidarray as $groupid) {
     }
     if ($courseid != $group->courseid) {
         print_error('groupunknown', '', '', $group->courseid);
+    }
+    // If the current user has no right on the group
+    if (!$hasManageGroupsCapability && $groupmanagement_options->creatorid =! $USER->id) { 
+        print_error('userHasNoRightToManageGroups', 'groupmanagement');
+    }
+    // If the group management activity is frozen
+    if ($groupmanagement->freezegroups == 1 || (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime) {
+        print_error('courseIsFrozen', 'groupmanagement');
     }
     $groupnames[] = format_string($group->name);
 }
