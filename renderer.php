@@ -93,6 +93,11 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
         $initiallyHideSubmitButton = false;
         $private_groups_id = array();
 
+        $disableDeletion = false;
+        if(count($options['options']) <= 2) {
+            $disableDeletion = true;
+        }
+
         foreach ($options['options'] as $option) {
             $group = (isset($groupmanagement_groups[$option->groupid])) ? ($groupmanagement_groups[$option->groupid]) : (false);
             if (!$group) {
@@ -235,9 +240,11 @@ class mod_groupmanagement_renderer extends plugin_renderer_base {
 
                         $actionLinks .= '&nbsp;&nbsp;';
 
-                        $url = new moodle_url('/mod/groupmanagement/group/delete.php', array('groups'=>$option->groupid, 'courseid'=>$course->id, 'cmid'=>$coursemoduleid));
-                        $deleteImage = '<img src="'.$this->output->pix_url('t/delete').'" alt="'.get_string('delete', 'moodle').'" />';
-                        $actionLinks .= html_writer::link($url, $deleteImage);
+                        if(!$disableDeletion) {
+                            $url = new moodle_url('/mod/groupmanagement/group/delete.php', array('groups'=>$option->groupid, 'courseid'=>$course->id, 'cmid'=>$coursemoduleid));
+                            $deleteImage = '<img src="'.$this->output->pix_url('t/delete').'" alt="'.get_string('delete', 'moodle').'" />';
+                            $actionLinks .= html_writer::link($url, $deleteImage);
+                        }
                     }
                 }
                 $html .= html_writer::tag('td', $actionLinks, array('class' => 'center'));

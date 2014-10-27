@@ -69,6 +69,13 @@ foreach($groupidarray as $groupid) {
     if ($groupmanagement->freezegroups == 1 || (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime)) {
         print_error('courseIsFrozen', 'groupmanagement');
     }
+    
+    $nbOptions = $DB->count_records("groupmanagement_options", array("groupmanagementid"=>$groupmanagement->id)); 
+    // If the group has not more than 2 options
+    if (($nbOptions - count($groupidarray)) < 2) {
+        print_error('atLeastTwoGroupsRequired', 'groupmanagement');
+    }
+
     $groupnames[] = format_string($group->name);
 }
 
