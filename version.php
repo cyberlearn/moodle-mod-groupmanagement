@@ -26,10 +26,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2014091700;
+$plugin->version  = 2014102700;
 $plugin->requires  = 2014050800; // Moodle 2.7
-$plugin->maturity  = MATURITY_STABLE;
-$plugin->release = '1.7 (Build: 2014091700)';
+$plugin->maturity  = MATURITY_BETA;
+$plugin->release = '1.0 beta (Build: 2014102700)';
 
 $plugin->component = 'mod_groupmanagement';
 $plugin->cron = 0;
