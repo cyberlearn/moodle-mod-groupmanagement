@@ -78,10 +78,16 @@ $context = context_course::instance($course->id);
 $hasManageGroupsCapability = has_capability('mod/groupmanagement:managegroups', $context);
 $groupmanagement = $DB->get_record("groupmanagement", array("id"=>$cgid));
 $groupmanagement_options = $DB->get_record("groupmanagement_options", array("groupid"=>$id));
+$nbOptions = $DB->count_records("groupmanagement_options", array("groupmanagementid"=>$groupmanagement->id)); 
 
 // If the group management activity is frozen
 if ($groupmanagement->freezegroups == 1 || (!empty($groupmanagement->freezegroupsaftertime) && time() >= $groupmanagement->freezegroupsaftertime)) {
     print_error('courseIsFrozen', 'groupmanagement');
+}
+
+// If the current user has no right to edit the group
+if ($id && !$hasManageGroupsCapability && (!empty($groupmanagement_options) && $groupmanagement_options->creatorid != $USER->id)) { 
+    print_error('userHasNoRightToManageGroups', 'groupmanagement');
 }
 
 $strgroups = get_string('groups');
@@ -125,11 +131,6 @@ if ($editform->is_cancelled()) {
     }
 
     if ($data->id) {
-        // If the current user has no right to edit the group
-        if (!$hasManageGroupsCapability && (!empty($groupmanagement_options) && $groupmanagement_options->creatorid =! $USER->id)) { 
-            print_error('userHasNoRightToManageGroups', 'groupmanagement');
-        }
-
         groups_update_group($data, $editform, $editoroptions);
         $option = $DB->get_record("groupmanagement_options", array("groupid" => $data->id));
         $option->timemodified = time();
@@ -153,6 +154,11 @@ if ($editform->is_cancelled()) {
         // If the current user can not create new groups
         if (!$hasManageGroupsCapability && $groupmanagement->groupcreationpossible == 0) { 
             print_error('userHasNoRightToManageGroups', 'groupmanagement');
+        }
+
+        // If the number of groups has reached the limit
+        if ($groupmanagement->limitmaxgroups == 1 && $nbOptions >= $groupmanagement->maxgroups) { 
+            print_error('maxNumberOfGroupsReached', 'groupmanagement');
         }
 
         $id = groups_create_group($data, $editform, $editoroptions);

@@ -62,7 +62,7 @@ foreach($groupidarray as $groupid) {
         print_error('groupunknown', '', '', $group->courseid);
     }
     // If the current user has no right on the group
-    if (!$hasManageGroupsCapability && $groupmanagement_options->creatorid =! $USER->id) { 
+    if (!$hasManageGroupsCapability && $groupmanagement_options->creatorid != $USER->id) { 
         print_error('userHasNoRightToManageGroups', 'groupmanagement');
     }
     // If the group management activity is frozen
